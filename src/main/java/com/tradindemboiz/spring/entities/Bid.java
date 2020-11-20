@@ -27,7 +27,7 @@ public class Bid {
   private User user;
 
   @ManyToOne
-  @JoinColumn(name = "auctions_id")
+  @JoinColumn(name = "auction_id")
   @JsonIgnoreProperties("bids")
   private Auction auction;
 }
