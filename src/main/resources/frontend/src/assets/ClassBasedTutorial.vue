@@ -1,5 +1,7 @@
 <template>
-  <div class="class-based-tutorial"></div>
+  <div class="class-based-tutorial">
+    <h1>Hesan</h1>
+  </div>
 </template>
 
 <script>
@@ -30,7 +32,7 @@ export default class ClassBasedTutorial extends Vue {
   somePropData;
 
   // This is a watcher. The variable to be watched is written as a string, and extra configs is written in the settings object as a second argument.
-  @Watch("someData", { deep: true })
+  @Watch("someData", { deep: true, immediate: true })
   onSomeDataChange(oldVal, newVal) {
     // The method to be run when the variable changes must be declared directly underneath the @Watch.
     console.log(oldVal, newVal);
