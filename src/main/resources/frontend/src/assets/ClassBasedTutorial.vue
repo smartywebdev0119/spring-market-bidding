@@ -31,7 +31,7 @@ export default class ClassBasedTutorial extends Vue {
 
   // This is a watcher. The variable to be watched is written as a string, and extra configs is written in the settings object as a second argument.
   @Watch("someData", { deep: true })
-  onSomeData(oldVal, newVal) {
+  onSomeDataChange(oldVal, newVal) {
     // The method to be run when the variable changes must be declared directly underneath the @Watch.
     console.log(oldVal, newVal);
     this.someData = newVal;
@@ -42,7 +42,7 @@ export default class ClassBasedTutorial extends Vue {
     // Some code here.
   }
 
-  // Life cycle hooks are written as fuctions.
+  // Life cycle hooks are written as usual.
   created() {}
   mounted() {}
   beforeDestroy() {}
