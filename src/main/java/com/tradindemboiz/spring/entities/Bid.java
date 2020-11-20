@@ -1,5 +1,6 @@
 package com.tradindemboiz.spring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,11 @@ public class Bid {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonIgnoreProperties("bids")
   private User user;
 
   @ManyToOne
   @JoinColumn(name = "auctions_id")
+  @JsonIgnoreProperties("bids")
   private Auction auction;
 }

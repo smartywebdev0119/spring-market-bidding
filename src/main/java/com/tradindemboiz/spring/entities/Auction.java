@@ -1,5 +1,6 @@
 package com.tradindemboiz.spring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,8 +28,10 @@ public class Auction {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonIgnoreProperties("auctions")
   private User user;
 
   @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
+  @JsonIgnoreProperties("auction")
   private Set<Bid> bids;
 }

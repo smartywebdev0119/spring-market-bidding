@@ -1,0 +1,52 @@
+package com.tradindemboiz.spring.controllers;
+
+import com.tradindemboiz.spring.entities.Auction;
+import com.tradindemboiz.spring.services.AuctionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/auctions")
+public class AuctionController {
+
+  @Autowired
+  AuctionService auctionService;
+
+  @GetMapping
+  public ResponseEntity<List<Auction>> getAllAuctions(@RequestParam(required = false) String searchString) {
+    var auctions = auctionService.getAllAuctions(searchString);
+    return ResponseEntity.ok(auctions);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Auction> getAuctionById(@PathVariable long id) {
+    var auction = auctionService.getAuctionById(id);
+    return ResponseEntity.ok(auction);
+  }
+
+  @PostMapping
+  public ResponseEntity<Auction> addAuction(@Validated @RequestBody Auction auction) {
+    var newAuction = auctionService.addAuction(auction);
+    var uri = URI.create("/api/v1/auctions/" + newAuction.getAuction_id());
+    return ResponseEntity.created(uri).body(newAuction);
+  }
+
+  @PutMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void updateAuction(@Validated @RequestBody Auction auction, @PathVariable long id) {
+    auctionService.updateAuction(auction, id);
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteAuction(@PathVariable long id) {
+    auctionService.deleteAuction(id);
+  }
+
+}
