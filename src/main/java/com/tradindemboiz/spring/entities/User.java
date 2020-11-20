@@ -25,10 +25,10 @@ public class User {
   @JsonIgnore
   private String password;
 
-  @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Bid> bids;
 
-  @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Auction> auctions;
 
   @JsonIgnore

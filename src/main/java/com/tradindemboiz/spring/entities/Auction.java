@@ -29,6 +29,6 @@ public class Auction {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "auctions", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
   private Set<Bid> bids;
 }
