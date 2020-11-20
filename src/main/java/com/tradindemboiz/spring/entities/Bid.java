@@ -12,11 +12,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Bid {
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long bid_id;
+
   private long timestamp;
-  private double bid_price;
+  private int bid_price;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
   private User user;
+
+  @ManyToOne
+  @JoinColumn(name = "auctions_id")
   private Auction auction;
 }

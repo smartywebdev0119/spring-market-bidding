@@ -15,14 +15,20 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long userId;
   private String username;
   private String email;
+
   @JsonIgnore
   private String password;
+
+  @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
   private Set<Bid> bids;
+
+  @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
   private Set<Auction> auctions;
 
   @JsonIgnore
