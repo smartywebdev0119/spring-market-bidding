@@ -30,6 +30,12 @@ public class AuctionController {
     return ResponseEntity.ok(auction);
   }
 
+  @GetMapping("/user/{userId}")
+  public ResponseEntity<List<Auction>> getAllAuctionsByUserId(@PathVariable long userId) {
+    var auctions = auctionService.getAllAuctionsByUserId(userId);
+    return ResponseEntity.ok(auctions);
+  }
+
   @PostMapping
   public ResponseEntity<Auction> addAuction(@Validated @RequestBody Auction auction) {
     var newAuction = auctionService.addAuction(auction);
