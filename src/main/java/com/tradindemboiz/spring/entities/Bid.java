@@ -1,6 +1,6 @@
 package com.tradindemboiz.spring.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(value = { "bidOwner", "bidAuction"})
 public class Bid {
 
   @Id
@@ -23,10 +22,12 @@ public class Bid {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonManagedReference
   private User bidOwner;
 
   @ManyToOne
   @JoinColumn(name = "auction_id")
+  @JsonManagedReference
   private Auction bidAuction;
 
 }

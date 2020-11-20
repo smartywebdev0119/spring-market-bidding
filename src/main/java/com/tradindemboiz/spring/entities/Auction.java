@@ -1,6 +1,7 @@
 package com.tradindemboiz.spring.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(value = { "auctionOwner", "auctionBids"})
 public class Auction {
 
   @Id
@@ -28,9 +28,11 @@ public class Auction {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonManagedReference
   private User auctionOwner;
 
   @OneToMany(mappedBy = "bidAuction", cascade = CascadeType.ALL)
+  @JsonBackReference
   private Set<Bid> auctionBids;
 
 }
