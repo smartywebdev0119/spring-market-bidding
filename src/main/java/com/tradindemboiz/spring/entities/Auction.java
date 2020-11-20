@@ -13,12 +13,12 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(value = { "auctionOwner", "auctionBids"})
 public class Auction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long auction_id;
-
   private long timestamp;
   private long end_date;
   private double start_price;
@@ -28,10 +28,9 @@ public class Auction {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonIgnoreProperties("auctions")
-  private User user;
+  private User auctionOwner;
 
-  @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-  @JsonIgnoreProperties("auction")
-  private Set<Bid> bids;
+  @OneToMany(mappedBy = "bidAuction", cascade = CascadeType.ALL)
+  private Set<Bid> auctionBids;
+
 }

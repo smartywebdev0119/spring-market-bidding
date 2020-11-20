@@ -12,22 +12,21 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(value = { "bidOwner", "bidAuction"})
 public class Bid {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long bid_id;
-
   private long timestamp;
   private int bid_price;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonIgnoreProperties("bids")
-  private User user;
+  private User bidOwner;
 
   @ManyToOne
   @JoinColumn(name = "auction_id")
-  @JsonIgnoreProperties("bids")
-  private Auction auction;
+  private Auction bidAuction;
+
 }

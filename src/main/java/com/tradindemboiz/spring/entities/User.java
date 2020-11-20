@@ -15,22 +15,21 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(value = { "bidOwner", "auctionOwner"})
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long userId;
+  private long user_id;
   private String username;
   private String email;
   private String password;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  @JsonIgnoreProperties("user")
-  private Set<Bid> bids;
+  @OneToMany(mappedBy = "bidOwner", cascade = CascadeType.ALL)
+  private Set<Bid> userBids;
 
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  @JsonIgnoreProperties("user")
-  private Set<Auction> auctions;
+  @OneToMany(mappedBy = "auctionOwner", cascade = CascadeType.ALL)
+  private Set<Auction> userAuctions;
 
   @JsonIgnore
   public String getPassword() {
@@ -41,6 +40,7 @@ public class User {
   public void setPassword(String password) {
     this.password = password;
   }
+
 }
 
 

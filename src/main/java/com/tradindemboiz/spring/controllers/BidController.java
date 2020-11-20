@@ -20,6 +20,7 @@ public class BidController {
   @GetMapping("/auction/{auctionId}")
   public ResponseEntity<List<Bid>> getAllBidsByAuctionId(@PathVariable long auctionId) {
     var bids = bidService.getAllBidsByAuctionId(auctionId);
+
     return ResponseEntity.ok(bids);
     // Vi hämtar alla bids här på en specifik auktion. Vi sköter sortering tills vidare i frontend.
   }
