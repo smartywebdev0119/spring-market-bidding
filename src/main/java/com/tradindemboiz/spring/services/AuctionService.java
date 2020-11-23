@@ -23,7 +23,8 @@ public class AuctionService {
     UserRepo userRepo;
 
     public List<Auction> getAllAuctions(String searchString) {
-        if (searchString != null) {
+        if (searchString != null && !searchString.isEmpty()) {
+
             var searchArray = Arrays.stream(searchString.split(" "))
                     .filter(s -> !s.isEmpty())
                     .collect(Collectors.toList());
