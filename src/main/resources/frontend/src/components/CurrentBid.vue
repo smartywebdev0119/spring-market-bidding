@@ -12,7 +12,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class CurrentBid extends Vue {
   @Prop({type: Number, required: true })
   startPrice
-  @Prop({type: Number})
+  @Prop({type: Number, default: 0})
   currentBid
 }
 </script>
