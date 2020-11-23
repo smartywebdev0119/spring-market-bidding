@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuctionService {
@@ -22,6 +25,10 @@ public class AuctionService {
   public List<Auction> getAllAuctions(String searchString) {
     if (searchString != null) {
       // Query after an auction with a search string.
+      var searchArray = Arrays.stream(searchString.split(" "))
+              .filter(s -> !s.isEmpty())
+              .collect(Collectors.toList());
+      System.out.println(searchArray);
       return null;
     }
     return auctionRepo.findAll();
