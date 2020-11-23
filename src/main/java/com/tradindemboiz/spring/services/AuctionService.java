@@ -29,6 +29,14 @@ public class AuctionService {
               .filter(s -> !s.isEmpty())
               .collect(Collectors.toList());
       System.out.println(searchArray);
+      List<Auction> tempArray = new ArrayList<>();
+      for(var element : searchArray){
+        var auctions = auctionRepo.findAllAuctionBySearchQuery(element);
+        if(!auctions.isEmpty()){
+          System.out.println("WHERE ARE YOU");
+          System.out.println(auctions);
+        }
+      }
       return null;
     }
     return auctionRepo.findAll();
