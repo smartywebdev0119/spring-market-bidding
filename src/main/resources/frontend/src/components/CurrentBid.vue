@@ -1,7 +1,7 @@
 <template>
   <div class="auction-details">
-    <h3 class="title">Highest bid:</h3>
-    <span class="details-value detail-bid">{{ currentBid }} SEK</span>
+    <h3 class="title">{{ currentBid > startPrice ? 'Highest bid:' : 'Starting price:'}}</h3>
+    <span class="details-value detail-bid">{{ currentBid > startPrice ? currentBid : startPrice }} SEK</span>
   </div>
 </template>
 
@@ -10,7 +10,9 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class CurrentBid extends Vue {
-  @Prop({type: Number, required: true})
+  @Prop({type: Number, required: true })
+  startPrice
+  @Prop({type: Number})
   currentBid
 }
 </script>

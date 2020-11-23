@@ -19,7 +19,7 @@
 
       <div class="row">
         <div class="col-6">
-          <CurrentBid :currentBid="currentBid" />
+          <CurrentBid :startPrice="auction.start_price" :currentBid="currentBid" />
         </div>
 
         <div class="col-6">
@@ -56,8 +56,9 @@ export default class Auction extends Vue {
     return `Image of ${this.auction.title}.`;
   }
 
+  // TODO: get current bid.
   get currentBid() {
-    return this.auction.start_price;
+    return 2500;
   }
 
   goBack() {
