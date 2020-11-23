@@ -1,9 +1,11 @@
 <template>
   <div v-if="auction" class="detailed-auction container">
     <div class="auction-header row">
-      <div class="back-arrow col-2">
-        Ba
-      </div>
+      <button @click="goBack()" class="back-arrow col-2">
+        <svg height="25px" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="#288781" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+      </button>
       <h2 class="auction-title col-10">
         {{ auction.title }}
       </h2>
@@ -58,6 +60,10 @@ export default class Auction extends Vue {
     return this.auction.start_price;
   }
 
+  goBack() {
+    this.$router.go(-1);
+  }
+
   async created() {
     const id = this.$route.params.id;
     await this.$store.dispatch("fetchAuction", id);
@@ -66,10 +72,6 @@ export default class Auction extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-  }
-
   .divider {
     width: calc(100% - 30px);
     margin: 0 15px;
@@ -84,7 +86,16 @@ export default class Auction extends Vue {
     align-items: center;
     height: 40px;
     margin-bottom: 20px;
-    font-size: 12px;
+    .back-arrow {
+      border: none;
+      background: none;
+      &:focus {
+        outline: none;
+        svg {
+          border: 1px solid #288781;
+        }
+      }
+    }
     .auction-title {
       font-size: 18px;
       font-style: italic;
@@ -111,7 +122,9 @@ export default class Auction extends Vue {
     }
 
     .auction-description {
-      
+      .description {
+        margin: 5px 0;
+      }
     }
 
   }
