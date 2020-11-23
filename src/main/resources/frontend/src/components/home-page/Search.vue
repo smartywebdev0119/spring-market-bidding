@@ -1,8 +1,16 @@
 <template>
   <div class="search-wrapper">
     <form @submit.prevent="executeSearch">
-      <input id="search-field" type="text" v-model="searchQuery" />
-      <button id="search">search</button>
+      <div class="form-group">
+        <input
+          class="form-control"
+          id="search-field"
+          type="text"
+          v-model="searchQuery"
+          placeholder="Type in your search..."
+        />
+        <button id="search" class="btn btn-primary">Search</button>
+      </div>
     </form>
   </div>
 </template>
@@ -25,4 +33,17 @@ export default class Search extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.search-wrapper {
+  .form-group {
+    display: grid;
+    row-gap: 5px;
+
+    #search-field,
+    #search {
+      justify-self: center;
+      width: 80%;
+    }
+  }
+}
+</style>
