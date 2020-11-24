@@ -58,7 +58,7 @@ export default class Auction extends Vue {
 
   // TODO: get current bid.
   get currentBid() {
-    return 2500;
+    return this.auction.start_price;
   }
 
   goBack() {
