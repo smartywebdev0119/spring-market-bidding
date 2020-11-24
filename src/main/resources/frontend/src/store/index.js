@@ -1,25 +1,25 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    auctions: [],
+    auctions: null,
   },
   mutations: {
-    setAuctions(state, auctions){
-      state.auctions = auctions;
+    updateAuctions(state, data) {
+      state.auctions = data;
     },
   },
   actions: {
-
-    async getAuctions(store){
-      let auctions = await fetch("/api/v1/auctions");
-      auctions = await auctions.json();
-      store.commit("setAuctions", auctions)
-    },   
+    async fetchAllAuctionsWithQuery({ commit }, searchQuery) {
+      let auctionResults = await fetch(
+        `/api/v1/auctions?search=${searchQuery}`
+      );
+      auctionResults = await auctionResults.json();
+      commit("updateAuctions", auctionResults);
+    },
   },
-  modules: {
-  }
-})
+  modules: {},
+});
