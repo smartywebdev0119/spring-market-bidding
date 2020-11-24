@@ -1,49 +1,51 @@
 <template>
   <div class="slider-menu">
     <div class="menu-icon">
-      <i class="material-icons">menu</i>
+      <i class="material-icons" @click="toggleMenu">clear</i>
     </div>
-    <div>
+    <div class="user">
       John Doe
     </div>
-    <span v-if="true">
-      Log out
-    </span>
-    <span v-else>
-      Log in
-    </span>
-    <span>
-      Create Auction
-    </span>
-    <span>
-      Register
-    </span>
-    <span>
-      Home
-    </span>
+    <div>
+      <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
+        {{ menuItem }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { Vue, Component } from "vue-property-decorator";
 @Component
-export default class SliderMenu extends Vue {}
+export default class SliderMenu extends Vue {
+  menuItems = ["Log in", "Log Out", "Create Auction", "Register", "Home"];
+
+  toggleMenu() {
+    this.$emit("toggleSlider");
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .slider-menu {
   z-index: 10;
-  background: red;
+  background:rgb(218, 205, 205);
   height: 100vh;
   width: 50vw;
   position: absolute;
   top: 0;
   right: 0;
   text-align: right;
+ 
 
-  div {
-      padding-right: 0.8em;
-      
+  .menu-item {
+    padding-right: 18px;
+    font-size: 1.2em;
+  }
+
+  .user {
+    padding-right: 18px;
+    font-size: 1.5em;
   }
   .menu-icon {
     height: 4em;
@@ -54,7 +56,7 @@ export default class SliderMenu extends Vue {}
     padding-right: 0.8em;
 
     i {
-      font-size: 2.1em;
+      font-size: 2em;
       color: #288781;
       cursor: pointer;
     }

@@ -1,49 +1,43 @@
 <template>
-    <div class="navbar">
-        <h1 class="title">D3mTr@din'Bo!z</h1>
-        <i class="material-icons" @click="toggleMenu()">{{ isActive ? "clear" : "menu"}}</i>
-    
-    </div>
-
+  <div class="navbar">
+    <h1 class="title">D3mTr@din'Bo!z</h1>
+    <i class="material-icons" @click="toggleMenu">menu</i>
+  </div>
 </template>
 
 <script>
-
 import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class NavBar extends Vue {
 
-    isActive = false;
 
-     toggleMenu(){
-        this.isActive = !this.isActive;
-    }
-
+  toggleMenu() {
+  this.$emit("toggleSlider");
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.navbar {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 5px;
+  background: rgb(228, 212, 212);
+  height: 4em;
 
-.navbar{
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 3fr 1fr;
-    column-gap: 5px;
-    background: rgb(228, 212, 212);
-    height: 4em;
-  
-    .title{
-        grid-column: 2/3;
-        justify-self: center;
-        margin: 0;
-        font-size: 1.6em;
-    }
-   
-    i{
-        font-size: 2em;
-        color: #288781;
-        cursor: pointer;
-        justify-self: center;
-    }
+  .title {
+    grid-column: 2/3;
+    justify-self: center;
+    margin: 0;
+    font-size: 1.6em;
+  }
+
+  i {
+    font-size: 2em;
+    color: #288781;
+    cursor: pointer;
+    justify-self: center;
+  }
 }
 </style>
