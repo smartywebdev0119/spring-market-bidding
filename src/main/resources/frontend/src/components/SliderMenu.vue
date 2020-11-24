@@ -29,27 +29,28 @@ export default class SliderMenu extends Vue {
 <style lang="scss" scoped>
 .slider-menu {
   z-index: 10;
-  background:rgb(218, 205, 205);
+  background: rgb(235, 228, 228);
   height: 100vh;
   width: 50vw;
   position: absolute;
   top: 0;
   right: 0;
   text-align: right;
- 
 
   .menu-item {
     padding-right: 18px;
     font-size: 1.2em;
+    cursor: pointer;
   }
 
   .user {
     padding-right: 18px;
     font-size: 1.5em;
+    font-weight: bold;
   }
   .menu-icon {
     height: 4em;
-    background: yellow;
+    background: rgb(235, 228, 228);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -58,7 +59,6 @@ export default class SliderMenu extends Vue {
     i {
       font-size: 2em;
       color: #288781;
-      cursor: pointer;
     }
   }
 }

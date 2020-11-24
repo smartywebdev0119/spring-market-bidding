@@ -9,10 +9,8 @@
 import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class NavBar extends Vue {
-
-
   toggleMenu() {
-  this.$emit("toggleSlider");
+    this.$emit("toggleSlider");
   }
 }
 </script>
@@ -23,7 +21,7 @@ export default class NavBar extends Vue {
   align-items: center;
   grid-template-columns: 1fr 3fr 1fr;
   column-gap: 5px;
-  background: rgb(228, 212, 212);
+  background: rgb(235, 228, 228);
   height: 4em;
 
   .title {
@@ -37,7 +35,7 @@ export default class NavBar extends Vue {
     font-size: 2em;
     color: #288781;
     cursor: pointer;
-    justify-self: center;
+    justify-self: flex-end;
   }
 }
 </style>
