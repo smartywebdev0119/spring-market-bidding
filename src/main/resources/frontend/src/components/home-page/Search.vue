@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { Vue, Component, Watch } from "vue-property-decorator";
+import { Vue, Component, } from "vue-property-decorator";
 
 @Component
 export default class Search extends Vue {
@@ -26,10 +26,10 @@ export default class Search extends Vue {
   }
 
   //TODO Remove this watch later on.
-  @Watch("$store.state.auctions")
-  onAuctionsChange(newVal) {
-    console.log(newVal);
-  }
+  // @Watch("$store.state.auctions")
+  // onAuctionsChange(newVal) {
+  //   console.log(newVal);
+  // }
 }
 </script>
 
