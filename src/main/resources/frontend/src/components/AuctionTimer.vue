@@ -16,10 +16,7 @@ export default class AuctionTimer extends Vue {
   countdown = 0;
 
   get timeLeft() {
-    if (this.countdown <= 0) {
-      return "Expired";
-    }
-    return this.getReadableCountdown(this.countdown);
+    return this.countdown <= 0 ? "Expired" : this.getReadableCountdown(this.countdown);
   }
 
   get isUrgent() {
