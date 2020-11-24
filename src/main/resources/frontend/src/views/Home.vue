@@ -1,6 +1,7 @@
 <template>
   <div class="home-page">
     <h1>This is the home page from static! Have Per fixed it? Stay tuned</h1>
+    <a href="/login">Go to login</a>
   </div>
 </template>
 
