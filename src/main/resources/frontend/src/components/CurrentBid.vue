@@ -1,7 +1,7 @@
 <template>
   <div class="auction-details">
-    <h3 class="title">{{ currentBid > startPrice ? 'Highest bid:' : 'Starting price:'}}</h3>
-    <span class="current-bid">{{ currentBid > startPrice ? currentBid : startPrice }} SEK</span>
+    <h3 class="title">{{ title }}</h3>
+    <span class="current-bid">{{ currentPrice }}</span>
   </div>
 </template>
 
@@ -14,6 +14,15 @@ export default class CurrentBid extends Vue {
   startPrice
   @Prop({type: Number, default: 0})
   currentBid
+
+  get title() {
+    return this.currentBid > this.startPrice ? 'Highest bid:' : 'Starting price:'
+  }
+
+  get currentPrice() {
+    const price = this.currentBid > this.startPrice ? this.currentBid : this.startPrice
+    return `${price} SEK`
+  }
 }
 </script>
 
