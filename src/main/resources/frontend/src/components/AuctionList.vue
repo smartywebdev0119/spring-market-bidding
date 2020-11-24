@@ -1,14 +1,18 @@
 <template>
   <div class="class-based-tutorial container">
-    <div class="sticky-top bg-white ">
-    <h5 class="pt-2">Auctions</h5>
-    <div class="line"></div>
 
+    <div class=" bg-white">
+      <h5 class="pt-2">Auctions</h5>
+      <div class="line"/>
     </div>
-    <div class="row ">
-    <AuctionListItem class="col-6 mt-3" v-for="(auction ) in this.$store.state.auctions" :key="auction.auction_id" :auction="auction"/>
 
+    <div class="row">
+    <AuctionListItem class="col-6 col-sm-6 col-md-4 col-lg-3 mt-3"
+      v-for="(auction ) in this.$store.state.auctions"
+      :key="auction.auction_id"
+      :auction="auction"/>
     </div>
+    
   </div>
   
 
@@ -24,7 +28,7 @@ import AuctionListItem from "../components/AuctionListItem"
     AuctionListItem
   },
 })
-export default class ClassBasedTutorial extends Vue {
+export default class AuctionList extends Vue {
   
   auctions = [];
 

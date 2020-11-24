@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page bg-pic">
     <div class="bg-grey">HEADER D3mTr@din'Bo!z</div>
   <div class="background">
     <img src="../assets/img/auction1.jpg" alt="">
@@ -32,5 +32,6 @@ img{
   width: 100%;
   object-fit: cover;
 }
+
 
 </style>

@@ -5,12 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    auctions: []
+    auctions: [],
   },
   mutations: {
     setAuctions(state, auctions){
       state.auctions = auctions;
-    }
+    },
   },
   actions: {
 
@@ -18,9 +18,8 @@ export default new Vuex.Store({
       let auctions = await fetch("/api/v1/auctions");
       auctions = await auctions.json();
       store.commit("setAuctions", auctions)
-    }
+    },   
   },
   modules: {
-
   }
 })
