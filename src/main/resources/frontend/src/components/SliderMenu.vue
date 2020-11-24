@@ -4,10 +4,10 @@
       <i class="material-icons" @click="toggleMenu">clear</i>
     </div>
     <div class="user">
-      {{user}}
+      {{ user }}
     </div>
     <div>
-      <div class="menu-item" v-show="user && menuItem.route == '/log-out'" v-for="(menuItem, i) in menuItems" :key="i">
+      <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
         {{ menuItem.title }}
       </div>
     </div>
@@ -18,14 +18,32 @@
 import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class SliderMenu extends Vue {
-  menuItems = [
-    { title: "Log In", route: "/log-in" },
-    { title: "Log Out", route: "/log-out" },
-    { title: "Create Auction", route: "/create-auction" },
-    { title: "Register", route: "/register" },
-    { title: "Home", route: "/" },
+  defaultMenuItems = [
+    { title: "Log In", route: "/log-in", userStatus: ["offline"] },
+    { title: "Log Out", route: "/log-out", userStatus: ["online"] },
+    {
+      title: "Create Auction",
+      route: "/create-auction",
+      userStatus: ["online"],
+    },
+    { title: "Register", route: "/register", userStatus: ["offline"] },
+    { title: "Home", route: "/", userStatus: ["offline", "online"] },
   ];
 
+  get menuItems() {
+    let items;
+    if (this.user) {
+      items = this.defaultMenuItems.filter((item) =>
+        item.userStatus.includes("online")
+      );
+    } else {
+      items = this.defaultMenuItems.filter((item) =>
+        item.userStatus.includes("offline")
+      );
+    }
+
+    return items;
+  }
 
   get user() {
     return this.$store.state.user;
