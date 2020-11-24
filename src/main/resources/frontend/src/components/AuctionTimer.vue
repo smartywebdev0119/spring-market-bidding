@@ -1,7 +1,7 @@
 <template>
   <div class="auction-details">
     <h3 class="title">Expires:</h3>
-    <span class="details-value detail-time-left">{{ timeLeft }}</span>
+    <span class="time-left" :class="{ urgent: isUrgent }">{{ timeLeft }}</span>
   </div>
 </template>
 
@@ -20,6 +20,10 @@ export default class AuctionTimer extends Vue {
       return "Expired";
     }
     return this.getReadableCountdown(this.countdown);
+  }
+
+  get isUrgent() {
+    return this.countdown < 60000 && this.countdown > 0;
   }
 
   getReadableCountdown(countdown) {
@@ -81,5 +85,12 @@ export default class AuctionTimer extends Vue {
       font-style: italic;
       font-size: 18px;
     }
+    .time-left {
+      font-size: 18px;
+    }
+  }
+  .urgent {
+    font-weight: bold;
+    color: red;
   }
 </style>
