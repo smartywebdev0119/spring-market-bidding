@@ -1,8 +1,7 @@
 <template>
     <div class="navbar">
         <h1 class="title">D3mTr@din'Bo!z</h1>
-    
-        <i class="material-icons">menu</i>
+        <i class="material-icons" @click="toggleMenu()">{{ isActive ? "clear" : "menu"}}</i>
     
     </div>
 
@@ -14,6 +13,12 @@ import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class NavBar extends Vue {
 
+    isActive = false;
+
+     toggleMenu(){
+        this.isActive = !this.isActive;
+    }
+
 }
 </script>
 
@@ -24,8 +29,9 @@ export default class NavBar extends Vue {
     align-items: center;
     grid-template-columns: 1fr 3fr 1fr;
     column-gap: 5px;
-    background: rosybrown;
-    
+    background: rgb(228, 212, 212);
+    height: 4em;
+  
     .title{
         grid-column: 2/3;
         justify-self: center;
@@ -40,5 +46,4 @@ export default class NavBar extends Vue {
         justify-self: center;
     }
 }
- 
 </style>
