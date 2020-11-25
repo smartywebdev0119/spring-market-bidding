@@ -1,9 +1,18 @@
 <template>
   <div v-if="auction" class="detailed-auction container">
     <div class="auction-header row">
-      <button @click="goBack()" class="back-arrow col-2">
-        <svg height="25px" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="#288781" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      <button @click="goBack" class="back-arrow col-2">
+        <svg
+          height="25px"
+          viewBox="0 0 16 16"
+          class="bi bi-arrow-left"
+          fill="#288781"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+          />
         </svg>
       </button>
       <h2 class="auction-title col-10">
@@ -14,15 +23,17 @@
 
     <div class="content">
       <div class="row image">
-        <img :src="auction.image_URL" :alt="imageAlt">
+        <img :src="auction.image_URL" :alt="imageAlt" />
       </div>
 
       <div class="row">
-        <div class="col-6">
-          <CurrentBid :startPrice="auction.start_price" :currentBid="currentBid" />
+        <div
+          class="col-6 col-sm-5 col-md-4 col-lg-3 offset-sm-1 offset-md-2 offset-lg-3"
+        >
+          <CurrentBid :startPrice="auction.start_price" :bids="currentBids" />
         </div>
 
-        <div class="col-6">
+        <div class="col-6 col-sm-5 col-md-4 col-lg-3">
           <AuctionTimer :endDate="auction.end_date" />
         </div>
       </div>
@@ -40,14 +51,17 @@
 import { Vue, Component } from "vue-property-decorator";
 import CurrentBid from "../components/CurrentBid.vue";
 import AuctionTimer from "../components/AuctionTimer.vue";
+import { fetchBidsByAuctionId } from "../core/utilities";
 
 @Component({
   components: {
     CurrentBid,
-    AuctionTimer
-  }
+    AuctionTimer,
+  },
 })
 export default class Auction extends Vue {
+  bids = [];
+
   get auction() {
     return this.$store.state.auction;
   }
@@ -56,9 +70,8 @@ export default class Auction extends Vue {
     return `Image of ${this.auction.title}.`;
   }
 
-  // TODO: get current bid.
-  get currentBid() {
-    return this.auction.start_price;
+  get currentBids() {
+    return this.bids;
   }
 
   goBack() {
@@ -68,65 +81,65 @@ export default class Auction extends Vue {
   async created() {
     const id = this.$route.params.id;
     await this.$store.dispatch("fetchAuction", id);
+    this.bids = await fetchBidsByAuctionId(id);
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .divider {
-    width: calc(100% - 30px);
-    margin: 0 15px;
-    border-bottom: 1px solid black;
-  }
+.divider {
+  width: calc(100% - 30px);
+  margin: 0 15px;
+  border-bottom: 1px solid black;
+}
 
-  .row {
-    margin-bottom: 20px;
-  }
+.row {
+  margin-bottom: 20px;
+}
 
-  .auction-header {
-    align-items: center;
-    height: 40px;
-    margin-bottom: 20px;
-    .back-arrow {
-      border: none;
-      background: none;
-      &:focus {
-        outline: none;
-        svg {
-          border: 1px solid #288781;
-        }
+.auction-header {
+  align-items: center;
+  height: 40px;
+  margin-bottom: 20px;
+  .back-arrow {
+    border: none;
+    background: none;
+    &:focus {
+      outline: none;
+      svg {
+        border: 1px solid #288781;
       }
     }
-    .auction-title {
-      font-size: 18px;
-      font-style: italic;
-      text-align: end;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
+  }
+  .auction-title {
+    font-size: 18px;
+    font-style: italic;
+    text-align: end;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.content {
+  .title {
+    color: #288781;
+    font-style: italic;
+    font-size: 18px;
+  }
+
+  .image {
+    display: flex;
+    justify-content: center;
+    img {
+      height: 200px;
     }
   }
 
-  .content {
-    .title {
-      color: #288781;
-      font-style: italic;
-      font-size: 18px;
+  .auction-description {
+    .description {
+      margin: 5px 0;
     }
-
-    .image {
-      display: flex;
-      justify-content: center;
-      img {
-        height: 200px;
-      }
-    }
-
-    .auction-description {
-      .description {
-        margin: 5px 0;
-      }
-    }
-
   }
+}
 </style>

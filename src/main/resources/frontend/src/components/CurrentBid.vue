@@ -1,7 +1,10 @@
 <template>
   <div class="auction-details">
     <h3 class="title">{{ title }}</h3>
-    <span class="current-bid">{{ currentPrice }}</span>
+    <div class="bid-info">
+      <span class="current-bid">{{ currentPrice }}</span>
+      <span v-if="hasBids" class="bids-counter">{{ numberOfBids }}</span>
+    </div>
   </div>
 </template>
 
@@ -10,35 +13,58 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class CurrentBid extends Vue {
-  @Prop({type: Number, required: true })
-  startPrice
-  @Prop({type: Number, default: 0})
-  currentBid
+  @Prop({ type: Number, required: true })
+  startPrice;
+  @Prop({ type: Array, default: [] })
+  bids;
+
+  get hasBids() {
+    return this.bids.length;
+  }
 
   get title() {
-    return this.currentBid > this.startPrice ? 'Highest bid:' : 'Starting price:'
+    return this.hasBids ? "Highest bid:" : "Starting price:";
   }
 
   get currentPrice() {
-    const price = this.currentBid > this.startPrice ? this.currentBid : this.startPrice
-    return `${price} SEK`
+    const price =
+      this.hasBids ? this.bids[0].bid_price : this.startPrice;
+    return `${price} SEK`;
+  }
+
+  get numberOfBids() {
+    const bidCount = this.bids.length;
+    const output = `- ${bidCount} bid`;
+    return bidCount > 1 ? output + "s" : output;
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .auction-details {
+.auction-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    color: #288781;
+    font-style: italic;
+    font-size: 18px;
+  }
+
+  .bid-info {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    .title {
-      color: #288781;
-      font-style: italic;
-      font-size: 18px;
-    }
+
     .current-bid {
       font-size: 18px;
       font-weight: bold;
     }
+
+    .bids-counter {
+      margin-left: 4px;
+      font-style: italic;
+    }
   }
+}
 </style>
