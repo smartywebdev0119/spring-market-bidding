@@ -32,7 +32,7 @@
         <div
           class="col-6 col-sm-5 col-md-4 col-lg-3 offset-sm-1 offset-md-2 offset-lg-3"
         >
-          <CurrentBid :startPrice="auction.start_price" :bids="currentBids" />
+          <CurrentBid :startPrice="auction.start_price" :bids="bids" />
         </div>
 
         <div class="col-6 col-sm-5 col-md-4 col-lg-3">
@@ -72,11 +72,7 @@ export default class Auction extends Vue {
   get imageAlt() {
     return `Image of ${this.auction.title}.`;
   }
-
-  get currentBids() {
-    return this.bids;
-  }
-
+  
   goBack() {
     this.$router.go(-1);
   }

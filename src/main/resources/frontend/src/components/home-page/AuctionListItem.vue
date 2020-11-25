@@ -11,10 +11,10 @@
           <p class="card-title font-italic">{{ auction.title }}</p>
           <div class="row">
             <div class="current-bid-container col-12">
-              <CurrentBid :startPrice="startPrice" :bids="currentBids" />
+              <CurrentBid :startPrice="auction.start_price" :bids="bids" />
             </div>
             <div class="col-12">
-              <AuctionTimer :endDate="endDate" />
+              <AuctionTimer :endDate="auction.end_date" />
             </div>
           </div>
         </div>
@@ -43,22 +43,6 @@ export default class AuctionListItem extends Vue {
 
   bids = [];
 
-  get link() {
-    return `/auction/${this.auction.end_date}`;
-  }
-
-  get currentBids() {
-    return this.bids;
-  }
-
-  get startPrice() {
-    return this.auction.start_price;
-  }
-
-  get endDate() {
-    return this.auction.end_date;
-  }
-
   async created() {
     this.bids = await fetchBidsByAuctionId(this.auction.auction_id);
   }
@@ -69,6 +53,7 @@ export default class AuctionListItem extends Vue {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .list-item {
   cursor: pointer;
