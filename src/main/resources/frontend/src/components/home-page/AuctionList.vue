@@ -38,7 +38,6 @@ export default class AuctionList extends Vue {
   }
 
   get auctions() {
-    //console.log(this.$store.state.auctions);
     return this.$store.state.auctions;
   }
 
