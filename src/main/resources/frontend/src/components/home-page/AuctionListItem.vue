@@ -27,6 +27,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import AuctionTimer from "../AuctionTimer";
 import CurrentBid from "../CurrentBid";
+import { fetchBidsByAuctionId } from "../../core/utilities";
 
 @Component({
   components: {
@@ -59,18 +60,12 @@ export default class AuctionListItem extends Vue {
   }
 
   async created() {
-    this.bids = await this.getBidByAuctionId(this.auction.auction_id);
+    this.bids = await fetchBidsByAuctionId(this.auction.auction_id);
   }
 
   navigate() {
     this.$store.commit("setAuction", this.auction);
     this.$router.push({ path: `auction/${this.auction.auction_id}` });
-  }
-
-  async getBidByAuctionId(id) {
-    let bids = await fetch(`/api/v1/bids/auction/${id}`);
-    bids = await bids.json();
-    return bids;
   }
 }
 </script>
