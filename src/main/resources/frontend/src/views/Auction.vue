@@ -1,5 +1,5 @@
 <template>
-  <div v-if="auction" class="detailed-auction container">
+  <div v-if="!processing" class="detailed-auction container">
     <div class="auction-header row">
       <div class="back-arrow col-2">
         <button @click="goBack">
@@ -63,6 +63,7 @@ import { fetchBidsByAuctionId } from "../core/utilities";
 })
 export default class Auction extends Vue {
   bids = [];
+  processing = true;
 
   get auction() {
     return this.$store.state.auction;
@@ -82,8 +83,11 @@ export default class Auction extends Vue {
 
   async created() {
     const id = this.$route.params.id;
-    await this.$store.dispatch("fetchAuction", id);
+    if (this.auction?.auction_id != id) {
+      await this.$store.dispatch("fetchAuction", id);
+    }
     this.bids = await fetchBidsByAuctionId(id);
+    this.processing = false;
   }
 }
 </script>
@@ -117,6 +121,7 @@ export default class Auction extends Vue {
       }
     }
   }
+
   .auction-title {
     font-size: 18px;
     font-style: italic;
