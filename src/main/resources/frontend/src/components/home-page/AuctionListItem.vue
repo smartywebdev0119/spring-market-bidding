@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div @click="navigate" class="list-item">
     <div class="card h-100 mb-6" style="">
       <div class="">
         <img
@@ -9,10 +9,14 @@
         />
         <div class="card-body">
           <p class="card-title font-italic">{{ auction.title }}</p>
-          <p class="card-title">
-            <span class="price-font">{{ highestBid }}</span> kr -
-            <span class="text-right">{{ amountOfBids }} bids</span>
-          </p>
+          <div class="row">
+            <div class="current-bid-container col-12">
+              <CurrentBid :startPrice="startPrice" :bids="currentBids" />
+            </div>
+            <div class="col-12">
+              <AuctionTimer :endDate="endDate" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -21,8 +25,14 @@
 
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
+import AuctionTimer from "../AuctionTimer";
+import CurrentBid from "../CurrentBid";
+
 @Component({
-  components: {},
+  components: {
+    AuctionTimer,
+    CurrentBid,
+  },
 })
 export default class AuctionListItem extends Vue {
   @Prop({
@@ -32,19 +42,29 @@ export default class AuctionListItem extends Vue {
 
   bids = [];
 
-  get amountOfBids() {
-    return this.bids.length;
+  get link() {
+    return `/auction/${this.auction.end_date}`;
   }
 
-  get highestBid() {
-    return this.bids.length > 0
-      ? this.bids[0].bid_price
-      : this.auction.start_price;
+  get currentBids() {
+    return this.bids;
+  }
+
+  get startPrice() {
+    return this.auction.start_price;
+  }
+
+  get endDate() {
+    return this.auction.end_date;
   }
 
   async created() {
     this.bids = await this.getBidByAuctionId(this.auction.auction_id);
-    console.log(this.bids)
+  }
+
+  navigate() {
+    this.$store.commit("setAuction", this.auction);
+    this.$router.push({ path: `auction/${this.auction.auction_id}` });
   }
 
   async getBidByAuctionId(id) {
@@ -55,6 +75,9 @@ export default class AuctionListItem extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+.list-item {
+  cursor: pointer;
+}
 .card-title {
   font-size: 0.75em;
 }
@@ -71,5 +94,9 @@ export default class AuctionListItem extends Vue {
   font-weight: bold;
   font-size: 1.8em;
   color: #288781;
+}
+
+.current-bid-container {
+  margin-bottom: 12px;
 }
 </style>
