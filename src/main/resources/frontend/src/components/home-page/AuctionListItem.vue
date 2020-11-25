@@ -8,7 +8,7 @@
           alt="Card image cap"
         />
         <div class="card-body">
-          <p class="card-title font-italic">{{ auction.title }}</p>
+          <p class="card-title font-italic text-truncate">{{ auction.title }}</p>
           <p class="card-title">
             <span class="price-font">{{ highestBid }}</span> kr -
             <span class="text-right">{{ amountOfBids }} bids</span>
