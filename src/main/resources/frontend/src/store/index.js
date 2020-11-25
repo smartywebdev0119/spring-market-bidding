@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     auction: null,
     auctions: null,
+    searchWord: ""
   },
   mutations: {
     setAuction(state, value) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     updateAuctions(state, data) {
       state.auctions = data;
     },
+    setSearchWord(state, data){
+      state.searchWord = data;
+    }
   },
   actions: {
     async fetchAuction({ commit }, id) {
@@ -28,6 +32,7 @@ export default new Vuex.Store({
       );
       auctionResults = await auctionResults.json();
       commit("updateAuctions", auctionResults);
+      commit("setSearchWord", searchQuery)
     },
   },
   modules: {},

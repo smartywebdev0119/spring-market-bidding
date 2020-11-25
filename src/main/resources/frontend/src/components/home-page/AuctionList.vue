@@ -1,8 +1,13 @@
 <template>
   <div class="class-based-tutorial container">
     <div class=" bg-white">
-      <h5 class="pt-2">Auctions</h5>
+      <h5 v-if="!searchWord">Auctions</h5>
+      <h5 v-else class="word">"{{ searchWord }}"</h5>
+
       <div class="line" />
+      <h5 v-if="auctions && !auctions.length" class="mt-3 word text-center">
+        No auctions found.
+      </h5>
     </div>
 
     <div class="row">
@@ -28,6 +33,10 @@ import AuctionListItem from "../home-page/AuctionListItem";
 export default class AuctionList extends Vue {
   auctioner = [];
 
+  get searchWord() {
+    return this.$store.state.searchWord;
+  }
+
   get auctions() {
     return this.$store.state.auctions;
   }
@@ -39,5 +48,8 @@ export default class AuctionList extends Vue {
 <style lang="scss" scoped>
 .line {
   border: 0.5px solid rgba(0, 0, 0, 0.5);
+}
+.word{
+  overflow-wrap: break-word;
 }
 </style>

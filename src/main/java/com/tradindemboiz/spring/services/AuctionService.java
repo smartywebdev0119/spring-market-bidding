@@ -38,9 +38,10 @@ public class AuctionService {
                 }
             }
 
-            if (results.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Found no results on query: " + searchString);
-            }
+            // this if made bugs in frontend rendering
+            //if (results.isEmpty()) {
+             //   throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Found no results on query: " + searchString);
+           // }
             return results;
         }
 
