@@ -31,22 +31,21 @@ export default class SliderMenu extends Vue {
   ];
 
   get menuItems() {
-    let items;
-    if (this.user) {
-      items = this.defaultMenuItems.filter((item) =>
-        item.userStatus.includes("online")
-      );
-    } else {
-      items = this.defaultMenuItems.filter((item) =>
-        item.userStatus.includes("offline")
-      );
-    }
+    return this.isUserLoggedIn
+      ? this.defaultMenuItems.filter((item) =>
+          item.userStatus.includes("online")
+        )
+      : this.defaultMenuItems.filter((item) =>
+          item.userStatus.includes("offline")
+        );
+  }
 
-    return items;
+  get isUserLoggedIn() {
+    return this.$store.state.loggedInUser ? true : false;
   }
 
   get user() {
-    return this.$store.state.user;
+    return this.$store.state.loggedInUser;
   }
 
   // Fix what to show depending on logged in or not.
