@@ -73,6 +73,7 @@ export default class SliderMenu extends Vue {
     cursor: pointer;
   }
 
+
   .user {
     padding-right: 18px;
     font-size: 1.5em;
@@ -89,6 +90,7 @@ export default class SliderMenu extends Vue {
     i {
       font-size: 2em;
       color: #288781;
+      cursor: pointer;
     }
   }
 
