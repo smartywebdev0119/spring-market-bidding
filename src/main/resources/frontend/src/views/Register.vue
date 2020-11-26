@@ -6,20 +6,23 @@
         type="text"
         required
         class="form-control"
+        id="username"
         placeholder="Username.."
       />
-      <input type="email" required class="form-control" placeholder="Email.." />
       <input
-        type="password"
+        type="email"
         required
         class="form-control"
-        placeholder="Password.."
+        inputmode="email"
+        id="email"
+        placeholder="Email.."
       />
       <input
         type="password"
         required
         class="form-control"
-        placeholder="Confirm Password.."
+        id="password"
+        placeholder="Password.."
       />
       <button class="btn btn-primary" type="submit" value="submit">
         Create User
