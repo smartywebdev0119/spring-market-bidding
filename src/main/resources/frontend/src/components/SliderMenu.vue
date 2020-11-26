@@ -3,8 +3,8 @@
     <div class="menu-icon">
       <i class="material-icons" @click="toggleMenu">clear</i>
     </div>
-    <div class="user">
-      {{ user }}
+    <div v-if="user" class="user">
+      {{ user.username }}
     </div>
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">

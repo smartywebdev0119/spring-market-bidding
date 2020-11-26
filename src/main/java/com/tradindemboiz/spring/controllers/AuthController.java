@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@ResponseStatus
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -17,13 +17,15 @@ public class AuthController {
 
   @GetMapping("/whoami")
   public ResponseEntity<User> whoami(){
+    System.out.println("JAG EEEEEEEEEEEEEEER HÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄR");
     User user = userService.getCurrentUser();
+    System.out.println(user.getUsername());
     return ResponseEntity.ok(user);
   }
 
-  @PostMapping("/login")
-  public ResponseEntity<User> loginUser(@RequestBody LoginDto userToLogin){
-    User user = userService.loginUser(userToLogin);
-    return ResponseEntity.ok(user);
-  }
+//  @PostMapping("/login")
+//  public ResponseEntity<User> loginUser(@RequestBody LoginDto userToLogin){
+//    User user = userService.loginUser(userToLogin);
+//    return ResponseEntity.ok(user);
+//  }
 }
