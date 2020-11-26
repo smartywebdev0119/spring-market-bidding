@@ -19,8 +19,8 @@ import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class SliderMenu extends Vue {
   defaultMenuItems = [
-    { title: "Log In", route: "/log-in", userStatus: ["offline"] },
-    { title: "Log Out", route: "/log-out", userStatus: ["online"] },
+    { title: "Log In", route: "/login", userStatus: ["offline"] },
+    { title: "Log Out", route: "/logout", userStatus: ["online"] },
     {
       title: "Create Auction",
       route: "/create-auction",
