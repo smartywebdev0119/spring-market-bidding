@@ -1,14 +1,16 @@
 <template>
   <div class="login-wrapper">
     <h2 class="text-primary">Log in</h2>
-    <form @submit.prevent="loginForm">
+    <form @submit.prevent="login">
       <input
-        type="email"
+        id="username"
+        type="text"
         required
         class="form-control"
         placeholder="Username.."
       />
       <input
+        id="password"
         type="password"
         required
         class="form-control"
@@ -29,7 +31,13 @@ import { Vue, Component } from "vue-property-decorator";
   components: {},
 })
 export default class Login extends Vue {
-  loginForm() {}
+  login(e) {
+    let loginCredentials = {
+      username: e.target.username.value,
+      password: e.target.password.value
+    }
+    console.log(loginCredentials);
+  }
 }
 </script>
 
