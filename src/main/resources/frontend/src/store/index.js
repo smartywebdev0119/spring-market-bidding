@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+   loggedInUser: "kalle kula",
+
     auction: null,
     auctions: null,
     searchWord: ""
