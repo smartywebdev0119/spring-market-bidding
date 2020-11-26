@@ -1,24 +1,31 @@
 <template>
-  <div class="login-wrapper">
-    <h2 class="text-primary">Log in</h2>
-    <form @submit.prevent="loginForm">
+  <div class="register-wrapper">
+    <h2 class="text-primary">Create Account</h2>
+    <form @submit.prevent="registerForm">
       <input
         type="text"
         required
         class="form-control"
         placeholder="Username.."
       />
+      <input type="email" required class="form-control" placeholder="Email.." />
       <input
         type="password"
         required
         class="form-control"
         placeholder="Password.."
       />
+      <input
+        type="password"
+        required
+        class="form-control"
+        placeholder="Confirm Password.."
+      />
       <button class="btn btn-primary" type="submit" value="submit">
-        Log in
+        Create User
       </button>
-      <router-link to="/register" tag="button" class="btn btn-primary"
-        >Not a member?</router-link
+      <router-link to="/login" tag="button" class="btn btn-primary"
+        >Already a member?</router-link
       >
     </form>
   </div>
@@ -31,12 +38,12 @@ import { Vue, Component } from "vue-property-decorator";
   components: {},
 })
 export default class Login extends Vue {
-  loginForm() {}
+  registerForm() {}
 }
 </script>
 
 <style lang="scss" scoped>
-.login-wrapper {
+.register-wrapper {
   h2 {
     text-align: center;
   }

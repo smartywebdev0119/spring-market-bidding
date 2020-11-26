@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-   loggedInUser: "kalle kula",
+   loggedInUser: null,
 
     auction: null,
     auctions: null,
