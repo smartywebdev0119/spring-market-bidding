@@ -34,6 +34,8 @@ export default new Vuex.Store({
       commit("updateAuctions", auctionResults);
       commit("setSearchWord", searchQuery)
     },
+
+    
   },
   modules: {},
 });
