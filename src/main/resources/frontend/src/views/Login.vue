@@ -52,18 +52,25 @@ export default class Login extends Vue {
       body: credentials,
     });
     console.log(response);
-    try {
-      response = await response.json();
-      if (response.error) {
-        console.log("Wrong username/password");
-      } else {
-        console.log("Successfully logged in");
-        await this.$store.dispatch("whoami");
-        this.$router.push("/");
-      }
-    } catch (e) {
-      console.log("ERROR")
+    if (response.url.includes("error")) {
+      console.log("You fuckin failed!");
+    } else {
+      console.log("You fucking success!");
+      await this.$store.dispatch("whoami");
+      this.$router.push("/");
     }
+    // try {
+    //   response = await response.json();
+    //   if (response.error) {
+    //     console.log("Wrong username/password");
+    //   } else {
+    //     console.log("Successfully logged in");
+    //     await this.$store.dispatch("whoami");
+    //     this.$router.push("/");
+    //   }
+    // } catch (e) {
+    //   console.log("ERROR")
+    // }
   }
 }
 </script>
