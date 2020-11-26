@@ -3,7 +3,7 @@
     <h2 class="text-primary">Log in</h2>
     <form @submit.prevent="loginForm">
       <input
-        type="email"
+        type="text"
         required
         class="form-control"
         placeholder="Username.."
