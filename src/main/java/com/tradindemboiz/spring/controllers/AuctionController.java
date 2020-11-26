@@ -19,8 +19,8 @@ public class AuctionController {
   AuctionService auctionService;
 
   @GetMapping
-  public ResponseEntity<List<Auction>> getAllAuctions(@RequestParam(required = false) String searchString) {
-    var auctions = auctionService.getAllAuctions(searchString);
+  public ResponseEntity<List<Auction>> getAllAuctions(@RequestParam(required = false) String search) {
+    var auctions = auctionService.getAllAuctions(search);
     return ResponseEntity.ok(auctions);
   }
 

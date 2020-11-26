@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface BidRepo extends JpaRepository<Bid, Long> {
 
-  @Query(value = "SELECT * FROM bids WHERE auction_id = :auctionId", nativeQuery = true)
+  @Query(value = "SELECT * FROM bids WHERE auction_id = :auctionId ORDER BY bid_price DESC", nativeQuery = true)
   List<Bid> findAllByAuctionId(@Param("auctionId") long auctionId);
 
   @Query(value = "SELECT * FROM bids WHERE user_id = :userId", nativeQuery = true)

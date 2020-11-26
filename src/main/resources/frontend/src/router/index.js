@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import Auction from "../views/Auction.vue";
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,11 @@ const routes = [
     name: "Login",
     component: Login
   }
+  {
+    path: "/auction/:id",
+    name: "Auction",
+    component: Auction,
+  },
 ];
 
 const router = new VueRouter({
