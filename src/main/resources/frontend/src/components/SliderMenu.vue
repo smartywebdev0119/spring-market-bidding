@@ -8,7 +8,7 @@
     </div>
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
-        {{ menuItem.title }}
+         <router-link class="choice" :to="menuItem.route">{{ menuItem.title}}</router-link>
       </div>
     </div>
   </div>
@@ -91,5 +91,12 @@ export default class SliderMenu extends Vue {
       color: #288781;
     }
   }
+
+  .choice{
+     color: #288781;
+     text-decoration: none;
+    &:active{font-weight: bold;}
+  }
+  
 }
 </style>
