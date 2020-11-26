@@ -2,22 +2,8 @@
   <div class="login-wrapper">
     <h2 class="text-primary">Log in</h2>
     <form @submit.prevent="loginForm">
-      <div class="form-group">
-        <input
-          type="email"
-          required
-          class="form-control"
-          placeholder="Username.."
-        />
-      </div>
-      <div class="form-group">
-        <input
-          type="password"
-          required
-          class="form-control"
-          placeholder="Password.."
-        />
-      </div>
+      <input type="email" required class="form-control" placeholder="Username.." />
+      <input type="password" required class="form-control" placeholder="Password.." />
       <button class="btn btn-primary" type="submit" value="submit">
         Log in
       </button>
@@ -38,15 +24,19 @@ export default class Login extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.login-wrapper {
+.login-wrapper form {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  h2 {
-    grid-column: 1/2;
-  }
+  grid-template-columns: 1fr;
+  row-gap: 8px;
 
-  .form-group {
-    grid-column: 1/2;
+  input{
+    width: 70%;
+    justify-self: center;
+  }
+  
+  .btn{
+    width: 55%;
+    justify-self: center;
   }
 }
 </style>
