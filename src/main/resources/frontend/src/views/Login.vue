@@ -34,23 +34,25 @@ export default class Login extends Vue {
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  text-align: center;
-}
-
-.login-wrapper form {
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 8px;
-
-  input {
-    width: 70%;
-    justify-self: center;
+.login-wrapper {
+  h2 {
+    text-align: center;
   }
 
-  .btn {
-    width: 55%;
-    justify-self: center;
+  form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+
+    input {
+      width: 70%;
+      justify-self: center;
+    }
+
+    .btn {
+      width: 55%;
+      justify-self: center;
+    }
   }
 }
 </style>
