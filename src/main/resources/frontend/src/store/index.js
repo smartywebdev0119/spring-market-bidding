@@ -43,6 +43,7 @@ export default new Vuex.Store({
       let user = await fetch("/auth/whoami");
       try {
         user = await user.json();
+        console.log(user);
         commit("setloggedInUser", user);
       } catch (e) {
         e.printStackTrace();

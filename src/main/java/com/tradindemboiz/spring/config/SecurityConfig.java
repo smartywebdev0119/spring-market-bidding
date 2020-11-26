@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .csrf().disable()
+        .cors().disable()
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/api/v1/bids/auction/**").permitAll()
         .antMatchers(HttpMethod.GET, "/api/v1/auctions/**").permitAll()
@@ -27,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/**").permitAll()
         .and()
         .formLogin()
-//        .loginProcessingUrl("/auth/login")
+        .loginProcessingUrl("/auth/login")
         .loginPage("/login")
     ;
   }

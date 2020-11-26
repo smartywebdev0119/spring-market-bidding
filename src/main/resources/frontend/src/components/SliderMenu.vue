@@ -8,7 +8,11 @@
     </div>
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
-         <router-link class="choice" :to="menuItem.route">{{ menuItem.title}}</router-link>
+        <div>
+          <span class="choice" @click="handeClick(menuItem)">{{
+            menuItem.title
+          }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -48,10 +52,16 @@ export default class SliderMenu extends Vue {
     return this.$store.state.loggedInUser;
   }
 
-  // Fix what to show depending on logged in or not.
-
   toggleMenu() {
     this.$emit("toggleSlider");
+  }
+
+  handeClick(menuItem) {
+    if (menuItem.route === "/logout") {
+      console.log("Log out");
+    } else {
+      this.$router.push(menuItem.route);
+    }
   }
 }
 </script>
@@ -70,9 +80,7 @@ export default class SliderMenu extends Vue {
   .menu-item {
     padding-right: 18px;
     font-size: 1.2em;
-    cursor: pointer;
   }
-
 
   .user {
     padding-right: 18px;
@@ -94,11 +102,14 @@ export default class SliderMenu extends Vue {
     }
   }
 
-  .choice{
-     color: #288781;
-     text-decoration: none;
-    &:active{font-weight: bold;}
+  .choice {
+    color: #288781;
+    margin: 0;
+    cursor: pointer;
+    text-decoration: none;
+    &:active {
+      font-weight: bold;
+    }
   }
-  
 }
 </style>

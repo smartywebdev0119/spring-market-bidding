@@ -46,18 +46,23 @@ export default class Login extends Vue {
       "&password=" +
       encodeURIComponent(userToLogin.password);
 
-    let response = await fetch("/login", {
+    let response = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: credentials,
     });
-
-    if (response.url.includes("error")) {
-      console.log("Wrong username/password");
-    } else {
-      console.log("Successfully logged in");
-      await this.$store.dispatch("whoami");
-      this.$router.push("/");
+    console.log(response);
+    try {
+      response = await response.json();
+      if (response.error) {
+        console.log("Wrong username/password");
+      } else {
+        console.log("Successfully logged in");
+        await this.$store.dispatch("whoami");
+        this.$router.push("/");
+      }
+    } catch (e) {
+      console.log("ERROR")
     }
   }
 }
