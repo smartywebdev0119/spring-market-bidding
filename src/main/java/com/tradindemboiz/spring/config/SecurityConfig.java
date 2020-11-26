@@ -4,6 +4,7 @@ import com.tradindemboiz.spring.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http
         .csrf().disable()
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/api/v1/**").authenticated()
+        .antMatchers(HttpMethod.GET, "/api/v1/bids/auction/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/api/v1/auctions/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/api/v1/auctions").permitAll()
         .antMatchers("./**").permitAll()
         .and()
         .formLogin()

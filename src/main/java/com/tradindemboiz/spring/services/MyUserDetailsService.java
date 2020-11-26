@@ -13,10 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -32,7 +30,7 @@ public class MyUserDetailsService implements UserDetailsService {
   @PostConstruct
   private void createDefaultUsers() {
     if (userRepo.findByUsername("test") == null) {
-      addUser("test", "test@demtradinboiz.xxx", "test1234", "SELLER,BUYER");
+      addUser("test", "test@demtradinboiz.xxx", "test1234", "USER");
     }
   }
 
@@ -45,7 +43,7 @@ public class MyUserDetailsService implements UserDetailsService {
     return toUserDetails(user);
   }
 
-  public User addUser(String username, String email,  String password, String roles) {
+  public User addUser(String username, String email, String password, String roles) {
     User user = new User(username, email, encoder.encode(password), roles);
     try {
       return userRepo.save(user);

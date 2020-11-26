@@ -23,4 +23,9 @@ public class UserController {
     return ResponseEntity.ok(users);
   }
 
+  @GetMapping("/whoami")
+  public ResponseEntity<User> whoami(){
+    User user = userService.getCurrentUser();
+    return ResponseEntity.ok(user);
+  }
 }
