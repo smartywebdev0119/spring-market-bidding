@@ -1,14 +1,20 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-export default {
-  
+import { Vue } from "vue-property-decorator";
+export default class App extends Vue {
+
 }
 </script>
 
 <style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 </style>
