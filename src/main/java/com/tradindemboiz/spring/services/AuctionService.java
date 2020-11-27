@@ -1,6 +1,8 @@
 package com.tradindemboiz.spring.services;
 
+import com.tradindemboiz.spring.dto.AuctionCreateDto;
 import com.tradindemboiz.spring.entities.Auction;
+import com.tradindemboiz.spring.entities.User;
 import com.tradindemboiz.spring.repositories.AuctionRepo;
 import com.tradindemboiz.spring.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,6 @@ public class AuctionService {
                             .forEach(results::add);
                 }
             }
-
             // this if made bugs in frontend rendering
             //if (results.isEmpty()) {
              //   throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Found no results on query: " + searchString);
@@ -61,7 +62,12 @@ public class AuctionService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The auction with that id does not exist."));
     }
 
-    public Auction addAuction(Auction auction) {
+    public Auction addAuction(AuctionCreateDto auctionToAdd) {
+
+        User user = userRepo.findById(auctionToAdd.getUser()).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,"couldn't find user"));
+
+        Auction auction = new Auction( auctionToAdd, user);
         return auctionRepo.save(auction);
     }
 

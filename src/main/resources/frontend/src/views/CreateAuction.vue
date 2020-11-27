@@ -2,11 +2,6 @@
   <div class="container">
     <div class="text-center header-text">Create Auction</div>
     <form @submit.prevent="createNewAuction">
-      <!-- <div :key="option.title" v-for="option in options">
-            <p>{{option.title}}</p>
-            <input id="option.title"  v-model="auction[option.bind]" type="option.bind" required class="form.control"/>
-        </div> -->
-
       <p>Title</p>
       <input
         class="form-control"
@@ -26,6 +21,7 @@
       <p>Auction end date</p>
       <datepicker
         v-model="auction.end_date"
+        bootstrap-styling
         :minimumView="'day'"
         :maximumView="'month'"
         placeholder="Select Date"
@@ -65,53 +61,49 @@ import Datepicker from "vuejs-datepicker";
 })
 export default class CreateAuction extends Vue {
   auction = {
-    title: null,
     description: null,
-    start_price: null,
-    end_date: new Date(),
+    end_date: this.minDate,
     image_URL: null,
+    start_price: null,
     timestamp: null,
+    title: null,
   };
 
-    date = new Date();
-    priorDate
-
+    date =  new Date();
+    minDate = new Date(new Date().setDate(this.date.getDate()+1));
     disabledDates=  {
-    to: this.date, // Disable all dates up to specific date
-    from: new Date()
+    to: new Date(new Date().setDate(this.date.getDate())),
+    from: new Date(new Date().setDate(this.date.getDate()+30))
     }
-  //   options = [
-  //       {title: "Title", bind: 'title', type: "text"},
-  //       {title: "Starting price", bind: 'start_price', type: "number"},
-  //       {title: "Description", bind: 'description', type: "text"},
-  //       {title: "Auction end date", bind: 'end_date', type: "number"},
-  //       {title: "Image Url", bind: 'image_URL', type: "text"},
-  //   ]
-
+ 
   created() {}
 
-  //   checkForm(){
-  //        if(Number.parseInt(this.auction.start_price)){
-  //           this.auction.start_price = Number.parseInt(this.auction.start_price)
-  //         }
-  //   }
-
   async createNewAuction() {
-    this.auction.start_price = Number.parseInt(this.auction.start_price);
-    this.auction.end_date;
 
-    this.auction.timestamp = new Date();
-    console.log(this.auction, "AUCTION");
+    this.auction.start_price = Number.parseFloat(this.auction.start_price);
 
-    let newAuction = await fetch("/api/v1/auctions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(this.auction),
+
+    let auctionToBeSaved = {
+        timestamp: new Date().getTime(),
+        end_date: this.auction.end_date.getTime(),
+        start_price: this.auction.start_price,
+        title: this.auction.title,
+        description: this.auction.description,
+        image_URL: this.auction.image_URL,
+        user: 1
+    }
+
+    console.log(auctionToBeSaved, "AUCTION");
+    console.log(JSON.stringify(auctionToBeSaved));
+
+    let newAuction = await fetch('/api/v1/auctions', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(auctionToBeSaved)
     });
     newAuction = await newAuction.json();
-    if (newAuction) {
+ 
       console.log(newAuction, "newAuction");
-    }
   }
 }
 </script>
