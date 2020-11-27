@@ -28,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/**").permitAll()
         .and()
         .formLogin()
-        .loginProcessingUrl("/auth/loginUser")
+        .loginProcessingUrl("/auth/login")
         .loginPage("/login")
-        .failureUrl("/login?error")
+//        .failureUrl("/login?error")
     ;
   }
 
