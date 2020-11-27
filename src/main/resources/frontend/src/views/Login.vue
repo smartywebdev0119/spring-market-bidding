@@ -48,29 +48,20 @@ export default class Login extends Vue {
 
     let response = await fetch("/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      mode: "no-cors",
       body: credentials,
     });
     console.log(response);
     if (response.url.includes("error")) {
-      console.log("You fuckin failed!");
+      console.log("ERROR: Login failed.");
     } else {
-      console.log("You fucking success!");
+      console.log("SUCCESS: Login succeeded");
       await this.$store.dispatch("whoami");
       this.$router.push("/");
     }
-    // try {
-    //   response = await response.json();
-    //   if (response.error) {
-    //     console.log("Wrong username/password");
-    //   } else {
-    //     console.log("Successfully logged in");
-    //     await this.$store.dispatch("whoami");
-    //     this.$router.push("/");
-    //   }
-    // } catch (e) {
-    //   console.log("ERROR")
-    // }
   }
 }
 </script>

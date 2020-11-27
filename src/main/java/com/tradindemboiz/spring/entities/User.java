@@ -32,6 +32,11 @@ public class User {
     this.roles = roles;
   }
 
+  // Constructor for anonymous user.
+  public User(String username) {
+    this.username = username;
+  }
+
   @OneToMany(mappedBy = "bidOwner", cascade = CascadeType.ALL)
   @JsonBackReference
   private Set<Bid> userBids;
