@@ -80,18 +80,14 @@ export default class CreateAuction extends Vue {
     title: null,
   };
 
-  get user() {
-    return this.$store.state.loggedInUser;
-  }
-
   created() {
-    if(!user){
+    if(!this.$store.state.loggedInUser){
       this.$router.push({ path: "/login" });
     }
   }
 
   async createAuction() {
-    if (this.user) {
+
       let auctionToBeSaved = {
         end_date: this.auction.end_date.getTime(),
         start_price: Number.parseFloat(this.auction.start_price),
@@ -109,7 +105,7 @@ export default class CreateAuction extends Vue {
       newAuction = await newAuction.json();
       this.$router.push({ path: `auction/${newAuction.auction_id}` });
     }
-  }
+  
 }
 </script>
 
