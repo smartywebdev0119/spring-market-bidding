@@ -3,12 +3,14 @@
     <div class="menu-icon">
       <i class="material-icons" @click="toggleMenu">clear</i>
     </div>
-    <div class="user">
-      {{ user }}
+    <div v-if="user" class="user">
+      {{ user.username }}
     </div>
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
-         <router-link class="choice" :to="menuItem.route">{{ menuItem.title}}</router-link>
+        <div class="choice">
+          <span @click="handleClick(menuItem)"> {{ menuItem.title }} </span>
+        </div>
       </div>
     </div>
   </div>
@@ -48,10 +50,13 @@ export default class SliderMenu extends Vue {
     return this.$store.state.loggedInUser;
   }
 
-  // Fix what to show depending on logged in or not.
-
   toggleMenu() {
     this.$emit("toggleSlider");
+  }
+
+  handleClick(menuItem) {
+    this.$router.push(menuItem.route);
+    this.toggleMenu();
   }
 }
 </script>
@@ -59,20 +64,19 @@ export default class SliderMenu extends Vue {
 <style lang="scss" scoped>
 .slider-menu {
   z-index: 10;
-  background: rgb(235, 228, 228);
+  background: white;
   height: 100vh;
-  width: 50vw;
+  width: 43vw;
   position: absolute;
   top: 0;
   right: 0;
   text-align: right;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.336);
 
   .menu-item {
     padding-right: 18px;
     font-size: 1.2em;
-    cursor: pointer;
   }
-
 
   .user {
     padding-right: 18px;
@@ -81,7 +85,7 @@ export default class SliderMenu extends Vue {
   }
   .menu-icon {
     height: 4em;
-    background: rgb(235, 228, 228);
+    background: white;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -94,11 +98,43 @@ export default class SliderMenu extends Vue {
     }
   }
 
-  .choice{
-     color: #288781;
-     text-decoration: none;
-    &:active{font-weight: bold;}
+  .choice {
+    color: #288781;
+    text-decoration: none;
+    &:active {
+      font-weight: bold;
+    }
+    span {
+      cursor: pointer;
+    }
   }
-  
+}
+
+@media (min-width: 450px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 35vw;
+  }
+}
+
+@media (min-width: 550px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 30vw;
+  }
+}
+
+@media (min-width: 900px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 20vw;
+  }
+}
+
+@media (min-width: 1400px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 12vw;
+  }
 }
 </style>
