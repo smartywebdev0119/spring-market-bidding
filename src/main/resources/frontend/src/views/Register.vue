@@ -83,6 +83,7 @@ export default class Login extends Vue {
 
 <style lang="scss" scoped>
 .register-wrapper {
+  transition: transform 300ms linear;
   h2 {
     text-align: center;
   }
@@ -105,6 +106,42 @@ export default class Login extends Vue {
     .btn {
       width: 55%;
       justify-self: center;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .register-wrapper {
+    form {
+      input {
+        width: 40%;
+      }
+
+      small {
+        width: 40%;
+      }
+
+      .btn {
+        width: 25%;
+      }
+    }
+  }
+}
+
+@media (min-width: 1600px) {
+  .register-wrapper {
+    form {
+      input {
+        width: 30%;
+      }
+
+      small {
+        width: 30%;
+      }
+
+      .btn {
+        width: 15%;
+      }
     }
   }
 }

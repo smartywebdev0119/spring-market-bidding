@@ -90,4 +90,40 @@ export default class Login extends Vue {
     }
   }
 }
+
+@media (min-width: 768px) {
+  .login-wrapper {
+    form {
+      input {
+        width: 40%;
+      }
+
+      small {
+        width: 40%;
+      }
+
+      .btn {
+        width: 25%;
+      }
+    }
+  }
+}
+
+@media (min-width: 1600px) {
+  .login-wrapper {
+    form {
+      input {
+        width: 30%;
+      }
+
+      small {
+        width: 30%;
+      }
+
+      .btn {
+        width: 15%;
+      }
+    }
+  }
+}
 </style>
