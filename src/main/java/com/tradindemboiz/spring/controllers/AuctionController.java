@@ -15,44 +15,43 @@ import java.util.List;
 @RequestMapping("/api/v1/auctions")
 public class AuctionController {
 
-  @Autowired
-  AuctionService auctionService;
+    @Autowired
+    AuctionService auctionService;
 
-  @GetMapping
-  public ResponseEntity<List<Auction>> getAllAuctions(@RequestParam(required = false) String search) {
-    var auctions = auctionService.getAllAuctions(search);
-    return ResponseEntity.ok(auctions);
-  }
+    @GetMapping
+    public ResponseEntity<List<Auction>> getAllAuctions(@RequestParam(required = false) String search) {
+        var auctions = auctionService.getAllAuctions(search);
+        return ResponseEntity.ok(auctions);
+    }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<Auction> getAuctionById(@PathVariable long id) {
-    var auction = auctionService.getAuctionById(id);
-    return ResponseEntity.ok(auction);
-  }
+    @GetMapping("/{id}")
+    public ResponseEntity<Auction> getAuctionById(@PathVariable long id) {
+        var auction = auctionService.getAuctionById(id);
+        return ResponseEntity.ok(auction);
+    }
 
-  @GetMapping("/user/{userId}")
-  public ResponseEntity<List<Auction>> getAllAuctionsByUserId(@PathVariable long userId) {
-    var auctions = auctionService.getAllAuctionsByUserId(userId);
-    return ResponseEntity.ok(auctions);
-  }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Auction>> getAllAuctionsByUserId(@PathVariable long userId) {
+        var auctions = auctionService.getAllAuctionsByUserId(userId);
+        return ResponseEntity.ok(auctions);
+    }
 
-  @PostMapping
-  public ResponseEntity<Auction> addAuction(@Validated @RequestBody Auction auction) {
-    var newAuction = auctionService.addAuction(auction);
-    var uri = URI.create("/api/v1/auctions/" + newAuction.getAuction_id());
-    return ResponseEntity.created(uri).body(newAuction);
-  }
+    @PostMapping
+    public ResponseEntity<Auction> addAuction(@Validated @RequestBody Auction auction) {
+        var newAuction = auctionService.addAuction(auction);
+        var uri = URI.create("/api/v1/auctions/" + newAuction.getAuction_id());
+        return ResponseEntity.created(uri).body(newAuction);
+    }
 
-  @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void updateAuction(@Validated @RequestBody Auction auction, @PathVariable long id) {
-    auctionService.updateAuction(auction, id);
-  }
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateAuction(@Validated @RequestBody Auction auction, @PathVariable long id) {
+        auctionService.updateAuction(auction, id);
+    }
 
-  @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteAuction(@PathVariable long id) {
-    auctionService.deleteAuction(id);
-  }
-
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAuction(@PathVariable long id) {
+        auctionService.deleteAuction(id);
+    }
 }
