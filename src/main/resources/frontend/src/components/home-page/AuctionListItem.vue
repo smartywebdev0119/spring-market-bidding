@@ -7,15 +7,24 @@
           :src="auction.image_URL"
           alt="Card image cap"
         />
-        <div class="card-body">
-          <p class="card-title font-italic text-truncate">{{ auction.title }}</p>
-          <div class="row">
-            <div class="current-bid-container col-12">
-              <CurrentBid :startPrice="auction.start_price" :bids="bids" />
-            </div>
-            <div class="col-12">
-              <AuctionTimer :endDate="auction.end_date" />
-            </div>
+        <div class="card-body row">
+          <p class="card-title font-italic text-truncate col-12">
+            {{ auction.title }}
+          </p>
+          <div class="col-12">
+            <CurrentBid
+              :fontSize="12"
+              :showTitle="false"
+              :startPrice="auction.start_price"
+              :bids="bids"
+            />
+          </div>
+          <div class="col-12">
+            <AuctionTimer
+              :fontSize="12"
+              :showTitle="false"
+              :endDate="auction.end_date"
+            />
           </div>
         </div>
       </div>
@@ -63,6 +72,9 @@ export default class AuctionListItem extends Vue {
 }
 .card {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  .card-body {
+    padding: 10px;
+  }
 }
 .card-title {
   width: 100%;
