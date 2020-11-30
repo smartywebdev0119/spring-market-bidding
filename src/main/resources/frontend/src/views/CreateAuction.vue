@@ -84,7 +84,11 @@ export default class CreateAuction extends Vue {
     return this.$store.state.loggedInUser;
   }
 
-  created() {}
+  created() {
+    if(!user){
+      this.$router.push({ path: "/login" });
+    }
+  }
 
   async createAuction() {
     if (this.user) {
