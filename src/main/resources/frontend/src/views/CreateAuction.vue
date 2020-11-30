@@ -1,25 +1,26 @@
 <template>
   <div class="container">
     <div class="text-center header-text">Create Auction</div>
-    <form @submit.prevent="createNewAuction">
-      <p>Title</p>
+    <form @submit.prevent="createNewAuction" class="w-75 mx-auto">
+      <label>Title</label>
       <input
-        class="form-control"
+        class="form-control mb-3"
         v-model="auction.title"
         type="text"
         required
       />
 
-      <p>Description</p>
+      <label>Description</label>
       <input
-        class="form-control"
+        class="form-control mb-3"
         v-model="auction.description"
         type="text"
         required
       />
 
-      <p>Auction end date</p>
+      <label>Auction end date</label>
       <datepicker
+      class="mb-3"
         v-model="auction.end_date"
         bootstrap-styling
         :minimumView="'day'"
@@ -27,19 +28,19 @@
         placeholder="Select Date"
         :disabled-dates="this.disabledDates"
       ></datepicker>
-      <p>Starting price</p>
 
+      <label>Starting price</label>
       <input
-        class="form-control"
+        class="form-control mb-3"
         v-model="auction.start_price"
         type="text"
         pattern="[0-9]*"
         required
       />
 
-      <p>Image Url</p>
+      <label>Image Url</label>
       <input
-        class="form-control"
+        class="form-control mb-3"
         v-model="auction.image_URL"
         type="text"
         required
@@ -82,7 +83,6 @@ export default class CreateAuction extends Vue {
 
     this.auction.start_price = Number.parseFloat(this.auction.start_price);
 
-
     let auctionToBeSaved = {
         timestamp: new Date().getTime(),
         end_date: this.auction.end_date.getTime(),
@@ -93,17 +93,13 @@ export default class CreateAuction extends Vue {
         user: 1
     }
 
-    console.log(auctionToBeSaved, "AUCTION");
-    console.log(JSON.stringify(auctionToBeSaved));
-
     let newAuction = await fetch('/api/v1/auctions', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(auctionToBeSaved)
     });
+    console.log("NewAuction", newAuction)
     newAuction = await newAuction.json();
- 
-      console.log(newAuction, "newAuction");
   }
 }
 </script>
