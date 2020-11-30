@@ -1,7 +1,13 @@
 <template>
   <div class="auction-details">
-    <h3 class="title">Expires:</h3>
-    <span class="time-left" :class="{ urgent: isUrgent }">{{ timeLeft }}</span>
+    <h3 v-if="showTitle" class="title" :style="standardFontSize">Ends:</h3>
+    <span
+      class="time-left primary"
+      :class="{ urgent: isUrgent }"
+      :style="standardFontSize"
+    >
+      {{ timeLeft }}
+    </span>
   </div>
 </template>
 
@@ -12,6 +18,10 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class AuctionTimer extends Vue {
   @Prop({ type: Number, required: true })
   endDate;
+  @Prop({ type: Boolean, default: true })
+  showTitle;
+  @Prop({ type: Number, default: 18 })
+  fontSize;
   timer = null;
   countdown = 0;
 
@@ -23,6 +33,10 @@ export default class AuctionTimer extends Vue {
 
   get isUrgent() {
     return this.countdown < 60000 && this.countdown > 0;
+  }
+
+  get standardFontSize() {
+    return { fontSize: this.fontSize + "px" };
   }
 
   getReadableCountdown(countdown) {
@@ -82,12 +96,10 @@ export default class AuctionTimer extends Vue {
   flex-direction: column;
   align-items: center;
   .title {
-    color: #288781;
     font-style: italic;
-    font-size: 18px;
   }
   .time-left {
-    font-size: 18px;
+    color: #288781;
   }
 }
 .urgent {
