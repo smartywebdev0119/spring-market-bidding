@@ -8,10 +8,8 @@
     </div>
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
-        <div>
-          <span class="choice" @click="handeClick(menuItem)">{{
-            menuItem.title
-          }}</span>
+        <div class="choice">
+          <span @click="handleClick(menuItem)"> {{ menuItem.title }} </span>
         </div>
       </div>
     </div>
@@ -56,12 +54,9 @@ export default class SliderMenu extends Vue {
     this.$emit("toggleSlider");
   }
 
-  handeClick(menuItem) {
-    if (menuItem.route === "/logout") {
-      console.log("Log out");
-    } else {
-      this.$router.push(menuItem.route);
-    }
+  handleClick(menuItem) {
+    this.$router.push(menuItem.route);
+    this.toggleMenu();
   }
 }
 </script>
@@ -69,13 +64,14 @@ export default class SliderMenu extends Vue {
 <style lang="scss" scoped>
 .slider-menu {
   z-index: 10;
-  background: rgb(235, 228, 228);
+  background: white;
   height: 100vh;
-  width: 50vw;
+  width: 43vw;
   position: absolute;
   top: 0;
   right: 0;
   text-align: right;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.336);
 
   .menu-item {
     padding-right: 18px;
@@ -89,7 +85,7 @@ export default class SliderMenu extends Vue {
   }
   .menu-icon {
     height: 4em;
-    background: rgb(235, 228, 228);
+    background: white;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -104,12 +100,41 @@ export default class SliderMenu extends Vue {
 
   .choice {
     color: #288781;
-    margin: 0;
-    cursor: pointer;
     text-decoration: none;
     &:active {
       font-weight: bold;
     }
+    span {
+      cursor: pointer;
+    }
+  }
+}
+
+@media (min-width: 450px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 35vw;
+  }
+}
+
+@media (min-width: 550px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 30vw;
+  }
+}
+
+@media (min-width: 900px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 20vw;
+  }
+}
+
+@media (min-width: 1400px) {
+  .slider-menu {
+    transition: width 1s;
+    width: 12vw;
   }
 }
 </style>
