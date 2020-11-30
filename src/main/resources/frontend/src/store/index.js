@@ -50,6 +50,8 @@ export default new Vuex.Store({
         console.log("Not authenticated");
       }
     },
+
+    
   },
   modules: {},
 });
