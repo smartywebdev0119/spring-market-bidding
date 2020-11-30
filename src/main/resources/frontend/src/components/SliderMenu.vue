@@ -9,7 +9,7 @@
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
         <div class="choice">
-          <span @click="handleClick(menuItem)"> {{ menuItem.title}} </span>
+          <span @click="handleClick(menuItem)"> {{ menuItem.title }} </span>
         </div>
       </div>
     </div>
@@ -54,8 +54,9 @@ export default class SliderMenu extends Vue {
     this.$emit("toggleSlider");
   }
 
-  handleClick(menuItem){
-    this.$router.push(menuItem.route)
+  handleClick(menuItem) {
+    this.$router.push(menuItem.route);
+    this.toggleMenu();
   }
 }
 </script>
@@ -70,6 +71,7 @@ export default class SliderMenu extends Vue {
   top: 0;
   right: 0;
   text-align: right;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.336);
 
   .menu-item {
     padding-right: 18px;
