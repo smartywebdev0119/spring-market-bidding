@@ -38,11 +38,11 @@ public class User {
   }
 
   @OneToMany(mappedBy = "bidOwner", cascade = CascadeType.ALL)
-  @JsonBackReference
+  @JsonBackReference(value = "bidOwner")
   private Set<Bid> userBids;
 
   @OneToMany(mappedBy = "auctionOwner", cascade = CascadeType.ALL)
-  @JsonBackReference
+  @JsonBackReference(value = "auctionOwner")
   private Set<Auction> userAuctions;
 
   @JsonIgnore
