@@ -13,8 +13,27 @@ public class UserService {
   @Autowired
   UserRepo userRepo;
 
+  @Autowired
+  MyUserDetailsService myUserDetailsService;
+
+  public User getCurrentUser() {
+    String username = myUserDetailsService.getCurrentUser();
+    return userRepo.findByUsername(username);
+  }
+
+  public User findByUsername(String username) {
+    return userRepo.findByUsername(username);
+  }
+
+
   public List<User> getAllUsers() {
     return userRepo.findAll();
+  }
+
+
+  public User registerUser(User user) {
+    User newUser = new User(user.getUsername(), user.getEmail(), myUserDetailsService.getEncoder().encode(user.getPassword()), user.getRoles());
+    return userRepo.save(newUser);
   }
 
 }

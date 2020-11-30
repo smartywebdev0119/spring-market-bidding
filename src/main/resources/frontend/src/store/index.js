@@ -5,22 +5,25 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-   loggedInUser: "kalle kula",
+    loggedInUser: null,
 
     auction: null,
     auctions: null,
-    searchWord: ""
+    searchWord: "",
   },
   mutations: {
     setAuction(state, value) {
       state.auction = value;
     },
-    updateAuctions(state, data) {
+    setAuctions(state, data) {
       state.auctions = data;
     },
-    setSearchWord(state, data){
+    setSearchWord(state, data) {
       state.searchWord = data;
-    }
+    },
+    setloggedInUser(state, data) {
+      state.loggedInUser = data;
+    },
   },
   actions: {
     async fetchAuction({ commit }, id) {
@@ -33,8 +36,19 @@ export default new Vuex.Store({
         `/api/v1/auctions?search=${searchQuery}`
       );
       auctionResults = await auctionResults.json();
-      commit("updateAuctions", auctionResults);
-      commit("setSearchWord", searchQuery)
+      commit("setAuctions", auctionResults);
+      commit("setSearchWord", searchQuery);
+    },
+    async whoami({ commit }) {
+      let user = await fetch("/auth/whoami");
+      try {
+        user = await user.json();
+        console.log(user);
+        commit("setloggedInUser", user);
+      } catch (e) {
+        e.printStackTrace();
+        console.log("Not authenticated");
+      }
     },
   },
   modules: {},
