@@ -57,7 +57,7 @@ export default class Login extends Vue {
       .then((response) => {
         if (response.ok) return response.json();
         else if (response.status == 400) {
-          this.errorMessage = `${this.user.username} already exist`;
+          this.errorMessage = `${this.user.username} already exists`;
         }
       })
       .then((data) => {
