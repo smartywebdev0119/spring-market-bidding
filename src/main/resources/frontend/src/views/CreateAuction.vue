@@ -63,33 +63,30 @@ import Datepicker from "vuejs-datepicker";
   },
 })
 export default class CreateAuction extends Vue {
+
+  date =  new Date();
+  minDate = new Date(new Date().setDate(this.date.getDate()+1));
+
+  disabledDates=  {
+    to: new Date(new Date().setDate(this.date.getDate())),
+    from: new Date(new Date().setDate(this.date.getDate()+30))
+    }
+
   auction = {
     description: null,
     end_date: this.minDate,
     image_URL: null,
     start_price: null,
-    timestamp: null,
     title: null,
   };
 
-    date =  new Date();
-    minDate = new Date(new Date().setDate(this.date.getDate()+1));
-
-    disabledDates=  {
-    to: new Date(new Date().setDate(this.date.getDate())),
-    from: new Date(new Date().setDate(this.date.getDate()+30))
-    }
- 
   created() {}
 
   async createAuction() {
 
-    this.auction.start_price = Number.parseFloat(this.auction.start_price);
-
     let auctionToBeSaved = {
-        timestamp: new Date().getTime(),
         end_date: this.auction.end_date.getTime(),
-        start_price: this.auction.start_price,
+        start_price: Number.parseFloat(this.auction.start_price),
         title: this.auction.title,
         description: this.auction.description,
         image_URL: this.auction.image_URL,

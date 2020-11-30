@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -29,7 +29,7 @@ public class Auction {
   private String image_URL;
 
   public Auction(AuctionCreateDto auctionCreateDto, User auctionOwner) {
-    this.timestamp = auctionCreateDto.getTimestamp();
+    this.timestamp = new Date().getTime();
     this.end_date = auctionCreateDto.getEnd_date();
     this.start_price = auctionCreateDto.getStart_price();
     this.title = auctionCreateDto.getTitle();
