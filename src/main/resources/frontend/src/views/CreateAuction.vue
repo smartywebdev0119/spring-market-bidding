@@ -1,16 +1,16 @@
 <template>
   <div class="container">
-    <div class="text-center header-text">Create Auction</div>
-    <form @submit.prevent="createNewAuction" class="w-75 mx-auto">
-      <label>Title</label>
+    <div class="text-center header-text mb-3 mt-3 italic">Create auction</div>
+    <form @submit.prevent="createAuction" class="w-75 mx-auto">
+      <label class="text-primary font-italic">Title</label>
       <input
-        class="form-control mb-3"
+        class="form-control mb-3 "
         v-model="auction.title"
         type="text"
         required
       />
 
-      <label>Description</label>
+      <label class="text-primary font-italic">Description</label>
       <input
         class="form-control mb-3"
         v-model="auction.description"
@@ -18,7 +18,7 @@
         required
       />
 
-      <label>Auction end date</label>
+      <label class="text-primary font-italic">Auction end date</label>
       <datepicker
       class="mb-3"
         v-model="auction.end_date"
@@ -29,7 +29,7 @@
         :disabled-dates="this.disabledDates"
       ></datepicker>
 
-      <label>Starting price</label>
+      <label class="text-primary font-italic">Starting price</label>
       <input
         class="form-control mb-3"
         v-model="auction.start_price"
@@ -38,15 +38,17 @@
         required
       />
 
-      <label>Image Url</label>
+      <label class="text-primary font-italic">Image Url</label>
       <input
-        class="form-control mb-3"
+        class="form-control mb-4"
         v-model="auction.image_URL"
         type="text"
         required
       />
+      <div class="center-button">
+        <button type="submit" class="btn btn-primary w-75 ">Create auction</button>
+      </div>
 
-      <button type="submit" class="btn btn-primary">Create auction</button>
     </form>
   </div>
 </template>
@@ -72,6 +74,7 @@ export default class CreateAuction extends Vue {
 
     date =  new Date();
     minDate = new Date(new Date().setDate(this.date.getDate()+1));
+
     disabledDates=  {
     to: new Date(new Date().setDate(this.date.getDate())),
     from: new Date(new Date().setDate(this.date.getDate()+30))
@@ -79,7 +82,7 @@ export default class CreateAuction extends Vue {
  
   created() {}
 
-  async createNewAuction() {
+  async createAuction() {
 
     this.auction.start_price = Number.parseFloat(this.auction.start_price);
 
@@ -98,8 +101,8 @@ export default class CreateAuction extends Vue {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(auctionToBeSaved)
     });
-    console.log("NewAuction", newAuction)
     newAuction = await newAuction.json();
+    this.$router.push({ path: `auction/${newAuction.auction_id}` });
   }
 }
 </script>
@@ -108,5 +111,9 @@ export default class CreateAuction extends Vue {
 .header-text {
   font-size: 2em;
   color: #288781;
+}
+.center-button{
+  display: flex;
+  justify-content: center;
 }
 </style>
