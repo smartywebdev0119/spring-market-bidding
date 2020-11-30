@@ -6,9 +6,13 @@
         type="text"
         required
         class="form-control"
+        :class="errorMessage ? 'is-invalid' : ''"
         v-model="user.username"
         placeholder="Username.."
       />
+      <small class="form-text text-danger" v-show="errorMessage">
+        {{ this.errorMessage }}
+      </small>
       <input
         type="email"
         required
@@ -46,29 +50,33 @@ export default class Login extends Vue {
     await fetch("/api/v1/users", {
       method: "POST",
       headers: {
-        "Content-Type": "Application/json"
+        "Content-Type": "Application/json",
       },
-      body: JSON.stringify(this.user)
+      body: JSON.stringify(this.user),
     })
-    .then(response => {
-      if(response.ok) return response.json()
-    })
-    .then(data => {
-      if(data){
-        console.log("created: ", data)
-        
-      }
-    })
-    .catch(error => {
-      console.error(error)
-    })
+      .then((response) => {
+        if (response.ok) return response.json();
+        else if (response.status == 400) {
+          this.errorMessage = `${this.user.username} already exist`;
+        }
+      })
+      .then((data) => {
+        if (data) {
+          console.log("created: ", data);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
+
   user = {
     username: null,
     email: null,
     password: null,
     roles: "USER",
   };
+  errorMessage = "";
 }
 </script>
 
@@ -84,6 +92,11 @@ export default class Login extends Vue {
     row-gap: 8px;
 
     input {
+      width: 70%;
+      justify-self: center;
+    }
+
+    small {
       width: 70%;
       justify-self: center;
     }
