@@ -4,11 +4,10 @@ import com.tradindemboiz.spring.entities.User;
 import com.tradindemboiz.spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -22,5 +21,12 @@ public class UserController {
   public ResponseEntity<List<User>> getAllUsers() {
     var users = userService.getAllUsers();
     return ResponseEntity.ok(users);
+  }
+
+  @PostMapping
+  public ResponseEntity<User> registerUser(@RequestBody @Validated User user) {
+    var newUser = userService.registerUser(user);
+    var uri = URI.create("/api/v1/users" + newUser.getUser_id());
+    return ResponseEntity.created(uri).body(newUser);
   }
 }
