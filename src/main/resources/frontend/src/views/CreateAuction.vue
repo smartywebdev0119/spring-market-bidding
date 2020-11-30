@@ -20,7 +20,7 @@
 
       <label class="text-primary font-italic">Auction end date</label>
       <datepicker
-      class="mb-3"
+        class="mb-3"
         v-model="auction.end_date"
         bootstrap-styling
         :minimumView="'day'"
@@ -46,9 +46,10 @@
         required
       />
       <div class="center-button">
-        <button type="submit" class="btn btn-primary w-75 ">Create auction</button>
+        <button type="submit" class="btn btn-primary w-75 ">
+          Create auction
+        </button>
       </div>
-
     </form>
   </div>
 </template>
@@ -63,14 +64,13 @@ import Datepicker from "vuejs-datepicker";
   },
 })
 export default class CreateAuction extends Vue {
+  date = new Date();
+  minDate = new Date(new Date().setDate(this.date.getDate() + 1));
 
-  date =  new Date();
-  minDate = new Date(new Date().setDate(this.date.getDate()+1));
-
-  disabledDates=  {
+  disabledDates = {
     to: new Date(new Date().setDate(this.date.getDate())),
-    from: new Date(new Date().setDate(this.date.getDate()+30))
-    }
+    from: new Date(new Date().setDate(this.date.getDate() + 30)),
+  };
 
   auction = {
     description: null,
@@ -80,26 +80,31 @@ export default class CreateAuction extends Vue {
     title: null,
   };
 
+  get user() {
+    return this.$store.state.loggedInUser;
+  }
+
   created() {}
 
   async createAuction() {
-
-    let auctionToBeSaved = {
+    if (this.user) {
+      let auctionToBeSaved = {
         end_date: this.auction.end_date.getTime(),
         start_price: Number.parseFloat(this.auction.start_price),
         title: this.auction.title,
         description: this.auction.description,
         image_URL: this.auction.image_URL,
-        user: 1
-    }
+        user: this.user.user_id,
+      };
 
-    let newAuction = await fetch('/api/v1/auctions', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(auctionToBeSaved)
-    });
-    newAuction = await newAuction.json();
-    this.$router.push({ path: `auction/${newAuction.auction_id}` });
+      let newAuction = await fetch("/api/v1/auctions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(auctionToBeSaved),
+      });
+      newAuction = await newAuction.json();
+      this.$router.push({ path: `auction/${newAuction.auction_id}` });
+    }
   }
 }
 </script>
@@ -109,7 +114,7 @@ export default class CreateAuction extends Vue {
   font-size: 2em;
   color: #288781;
 }
-.center-button{
+.center-button {
   display: flex;
   justify-content: center;
 }
