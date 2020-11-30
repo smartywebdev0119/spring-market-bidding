@@ -6,7 +6,7 @@
         type="text"
         required
         class="form-control"
-        id="username"
+        v-model="user.username"
         placeholder="Username.."
       />
       <input
@@ -14,14 +14,15 @@
         required
         class="form-control"
         inputmode="email"
-        id="email"
+        v-model="user.email"
         placeholder="Email.."
+        pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+"
       />
       <input
         type="password"
         required
         class="form-control"
-        id="password"
+        v-model="user.password"
         placeholder="Password.."
       />
       <button class="btn btn-primary" type="submit" value="submit">
@@ -41,7 +42,33 @@ import { Vue, Component } from "vue-property-decorator";
   components: {},
 })
 export default class Login extends Vue {
-  registerForm() {}
+  async registerForm() {
+    await fetch("/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json"
+      },
+      body: JSON.stringify(this.user)
+    })
+    .then(response => {
+      if(response.ok) return response.json()
+    })
+    .then(data => {
+      if(data){
+        console.log("created: ", data)
+        
+      }
+    })
+    .catch(error => {
+      console.error(error)
+    })
+  }
+  user = {
+    username: null,
+    email: null,
+    password: null,
+    roles: "USER",
+  };
 }
 </script>
 

@@ -1,5 +1,6 @@
 package com.tradindemboiz.spring.controllers;
 
+import com.tradindemboiz.spring.dto.UserDto;
 import com.tradindemboiz.spring.entities.User;
 import com.tradindemboiz.spring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<User> registerUser(@RequestBody @Validated User user) {
-    var newUser = userService.registerUser(user);
+  public ResponseEntity<User> registerUser(@RequestBody @Validated UserDto userToBeCreated) {
+    var newUser = userService.registerUser(userToBeCreated);
     var uri = URI.create("/api/v1/users/" + newUser.getUser_id());
     return ResponseEntity.created(uri).body(newUser);
   }

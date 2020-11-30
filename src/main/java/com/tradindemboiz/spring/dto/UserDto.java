@@ -1,4 +1,4 @@
-package com.tradindemboiz.spring.models;
+package com.tradindemboiz.spring.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,3 +13,5 @@ public class UserDto {
     private String password;
     private String roles;
 }
+
+
