@@ -62,7 +62,8 @@ export default class Login extends Vue {
       })
       .then((data) => {
         if (data) {
-          console.log("created: ", data);
+          console.log("user created: ", data);
+          this.$router.push("/login");
         }
       })
       .catch((error) => {
