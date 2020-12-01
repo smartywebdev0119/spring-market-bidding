@@ -8,8 +8,14 @@
     </div>
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
+        <div class="choice">
+          <span @click="handleClick(menuItem)">
+            {{menuItem.title}}
+          </span>
+        </div>
+          <!--
           <router-link @click.native="handleClick()" class="choice" :to="menuItem.route"> {{ menuItem.title }} </router-link>
-        
+        -->
       </div>
     </div>
   </div>
@@ -53,8 +59,23 @@ export default class SliderMenu extends Vue {
     this.$emit("toggleSlider");
   }
 
-  handleClick() {
+  handleClick(menuItem) {
     this.toggleMenu();
+    if(this.$route.path == menuItem.route) return;
+    if(menuItem.route === "/logout"){
+      console.log("DO I EXIST?")
+      return this.logoutUser()
+    }
+    this.$router.push(menuItem.route)
+    
+  }
+
+  logoutUser() {
+    
+
+    //return user to home
+    if(this.$route.path === "/") return;
+    this.$router.push("/")
   }
 }
 </script>
