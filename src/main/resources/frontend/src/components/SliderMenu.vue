@@ -13,9 +13,6 @@
             {{menuItem.title}}
           </span>
         </div>
-          <!--
-          <router-link @click.native="handleClick()" class="choice" :to="menuItem.route"> {{ menuItem.title }} </router-link>
-        -->
       </div>
     </div>
   </div>
@@ -71,7 +68,7 @@ export default class SliderMenu extends Vue {
   }
 
   logoutUser() {
-    
+
 
     //return user to home
     if(this.$route.path === "/") return;
