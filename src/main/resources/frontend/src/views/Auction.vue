@@ -43,7 +43,7 @@
         <button
           type="button"
           class="btn btn-primary bid-btn col-4 offset-4"
-          v-if="loggedInUser.user_id != auction.auctionOwner.user_id"
+          v-if="isOwner"
           @click="toggleModal"
         >
           Place bid
@@ -109,6 +109,13 @@ export default class Auction extends Vue {
 
   get loggedInUser() {
     return this.$store.state.loggedInUser;
+  }
+
+  get isOwner() {
+    if (!this.loggedInUser) return true;
+    return this.loggedInUser.user_id === this.auction.auctionOwner.user_id
+      ? false
+      : true;
   }
 
   async created() {
