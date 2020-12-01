@@ -51,6 +51,17 @@
         <div class="divider"></div>
         <p class="description col-12">"{{ auction.description }}"</p>
       </div>
+      <div class="row auction-description">
+        <h4 class="title col-12">Contact information</h4>
+        <div class="divider" />
+        <div class="description col-12">
+          <p>
+            <i class="material-icons align-middle" aria-hidden="true">mail</i>
+            {{ auction.auctionOwner.email }}
+          </p>
+          <p>{{ auction.auctionOwner.username }}</p>
+        </div>
+      </div>
     </div>
     <PlaceBidModal @closeModal="toggleModal" v-if="showModal" :bids="bids" :auction="auction" />
   </div>
@@ -82,7 +93,7 @@ export default class Auction extends Vue {
   get imageAlt() {
     return `Image of ${this.auction.title}.`;
   }
-  
+
   goBack() {
     this.$router.go(-1);
   }
