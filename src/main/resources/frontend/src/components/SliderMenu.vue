@@ -9,7 +9,9 @@
     <div>
       <div class="menu-item" v-for="(menuItem, i) in menuItems" :key="i">
         <div class="choice">
-          <span @click="handleClick(menuItem)"> {{ menuItem.title }} </span>
+          <span @click="handleClick(menuItem)">
+            {{ menuItem.title }}
+          </span>
         </div>
       </div>
     </div>
@@ -55,8 +57,30 @@ export default class SliderMenu extends Vue {
   }
 
   handleClick(menuItem) {
-    this.$router.push(menuItem.route);
     this.toggleMenu();
+    if (this.$route.path == menuItem.route) return;
+    if (menuItem.route === "/logout") {
+      console.log("DO I EXIST?");
+      return this.logoutUser();
+    }
+    this.$router.push(menuItem.route);
+  }
+
+  async logoutUser() {
+    fetch("/auth/logout", {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          this.$store.commit("setloggedInUser", null)
+          //return user to home
+          if (this.$route.path === "/") return;
+          this.$router.push("/");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
 </script>

@@ -1,9 +1,6 @@
 <template>
   <div class="home-page bg-pic">
-    <div class="bg-grey">HEADER D3mTr@din'Bo!z</div>
     <div class="background">
-      <img src="../assets/img/auction1.jpg" alt="" />
-      
     </div>
       <Search />
       <AuctionList />
@@ -32,11 +29,11 @@ export default class Home extends Vue {
 <style lang="scss" scoped>
 .background {
   max-width: 100vw;
+  height: 15vh;
   overflow: hidden;
-  max-height: 30vh;
+  background-image: url('../assets/img/auction1.jpg');
+  background-position: center;
+  background-size: cover;
 }
-img {
-  width: 100%;
-  object-fit: cover;
-}
+
 </style>

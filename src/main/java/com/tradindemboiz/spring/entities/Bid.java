@@ -24,12 +24,12 @@ public class Bid {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonManagedReference
+  @JsonManagedReference(value = "bidOwner")
   private User bidOwner;
 
   @ManyToOne
   @JoinColumn(name = "auction_id")
-  @JsonManagedReference
+  @JsonManagedReference(value = "bidAuction")
   private Auction bidAuction;
 
   public Bid(BidCreateDto bidCreateDto) {
