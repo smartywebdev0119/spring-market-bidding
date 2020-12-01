@@ -39,6 +39,12 @@
           <AuctionTimer :endDate="auction.end_date" />
         </div>
       </div>
+      <div class="bid row">
+      <button type="button" class="btn btn-primary bid-btn col-4 offset-4"  @click="toggleModal">
+  Place bid
+</button>
+</div>
+
 
       <div class="row auction-description">
         <h4 class="title col-12">Description</h4>
@@ -57,6 +63,7 @@
         </div>
       </div>
     </div>
+    <PlaceBidModal @closeModal="toggleModal" v-if="showModal" :bids="bids" :auction="auction" />
   </div>
 </template>
 
@@ -65,16 +72,19 @@ import { Vue, Component } from "vue-property-decorator";
 import CurrentBid from "../components/CurrentBid.vue";
 import AuctionTimer from "../components/AuctionTimer.vue";
 import { fetchBidsByAuctionId } from "../core/utilities";
+import PlaceBidModal from '../components/PlaceBidModal'
 
 @Component({
   components: {
     CurrentBid,
     AuctionTimer,
+    PlaceBidModal
   },
 })
 export default class Auction extends Vue {
   bids = [];
   processing = true;
+  showModal = false;
 
   get auction() {
     return this.$store.state.auction;
@@ -88,6 +98,10 @@ export default class Auction extends Vue {
     this.$router.go(-1);
   }
 
+  get loggedInUser(){
+    return this.$store.state.loggedInUser
+  }
+
   async created() {
     const id = this.$route.params.id;
     if (this.auction?.auction_id != id) {
@@ -96,6 +110,15 @@ export default class Auction extends Vue {
     this.bids = await fetchBidsByAuctionId(id);
     this.processing = false;
   }
+
+  toggleModal(){
+    if(!this.loggedInUser){
+      this.$router.push("/login")
+    }
+    this.showModal = !this.showModal
+  }
+
+
 }
 </script>
 
@@ -159,5 +182,9 @@ export default class Auction extends Vue {
       margin: 5px 0;
     }
   }
+}
+
+.bid-btn{
+ border-radius: 12px;
 }
 </style>
