@@ -1,6 +1,5 @@
 <template>
   <div class="home-page bg-pic">
-    <div class="bg-grey">HEADER D3mTr@din'Bo!z</div>
     <div class="background">
       <img src="../assets/img/auction1.jpg" alt="" />
       
@@ -33,7 +32,7 @@ export default class Home extends Vue {
 .background {
   max-width: 100vw;
   overflow: hidden;
-  max-height: 30vh;
+  max-height: 25vh;
 }
 img {
   width: 100%;
