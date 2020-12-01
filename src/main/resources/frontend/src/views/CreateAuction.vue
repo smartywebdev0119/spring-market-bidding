@@ -33,7 +33,7 @@
       <input
         class="form-control mb-3"
         v-model="auction.start_price"
-        type="text"
+        type="number"
         pattern="[0-9]*"
         required
       />
