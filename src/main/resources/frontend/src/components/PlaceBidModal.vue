@@ -16,16 +16,18 @@
       />
 
       <AuctionTimer class="mb-4" :fontSize="25" :endDate="auction.end_date" />
-
+      <p class="text-danger font-weight-bold" v-if="error">{{ this.error }}</p>
       <div>
         <div class="text-primary modal-bid">Your bid</div>
-        <form action="">
+        <form @submit.prevent="createBid" class="col">
           <input
+            :class="error ? 'is-invalid' : ''"
             required
             type="number"
             pattern="[0-9]*"
             placeholder="place bid ..."
-            class="modal-input"
+            class="modal-input form-control mx-auto"
+            v-model="bidPrice"
           />
           <div>
             <button type="submit" class="btn btn-primary modal-btn mt-2 mb-5">
@@ -63,6 +65,25 @@ export default class PlaceBidModal extends Vue {
   closeModal() {
     this.$emit("closeModal");
   }
+  error = null;
+  bidPrice = null;
+
+  async createBid() {
+    let response = await fetch(
+      `/api/v1/auctions/${this.auction.auction_id}/bids`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bidPrice: this.bidPrice }),
+      }
+    );
+
+    if (response.ok) this.closeModal();
+    if (!response.ok) {
+      response = await response.json();
+      this.error = response.message;
+    }
+  }
 }
 </script>
 
@@ -96,6 +117,10 @@ export default class PlaceBidModal extends Vue {
     margin-top: 0.2em;
   }
   .modal-btn {
+    width: 11em;
+  }
+  .modal-input {
+    justify-self: center;
     width: 11em;
   }
 }

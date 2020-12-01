@@ -87,6 +87,10 @@ export default class Auction extends Vue {
     this.$router.go(-1);
   }
 
+  get loggedInUser(){
+    return this.$store.state.loggedInUser
+  }
+
   async created() {
     const id = this.$route.params.id;
     if (this.auction?.auction_id != id) {
@@ -97,9 +101,11 @@ export default class Auction extends Vue {
   }
 
   toggleModal(){
+    if(!this.loggedInUser){
+      this.$router.push("/login")
+    }
     this.showModal = !this.showModal
   }
-
 
 
 }

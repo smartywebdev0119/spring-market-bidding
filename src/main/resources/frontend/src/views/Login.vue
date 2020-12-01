@@ -62,7 +62,7 @@ export default class Login extends Vue {
     } else {
       console.log("SUCCESS: Login succeeded");
       await this.$store.dispatch("whoami");
-      this.$router.push("/");
+      this.$router.go(-1);
     }
   }
 }
