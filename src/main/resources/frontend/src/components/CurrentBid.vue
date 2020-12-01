@@ -1,8 +1,12 @@
 <template>
   <div class="auction-details">
-    <h3 v-if="showTitle" class="title" :style="standardFontSize">{{ title }}</h3>
+    <h3 v-if="showTitle" class="title" :style="standardFontSize">
+      {{ title }}
+    </h3>
     <div class="bid-info">
-      <span class="current-bid" :style="standardFontSize">{{ currentPrice }}</span>
+      <span class="current-bid" :style="standardFontSize">{{
+        currentPrice
+      }}</span>
       <span v-if="hasBids" class="bids-counter" :style="bidCounterFontSize">
         {{ numberOfBids }}
       </span>

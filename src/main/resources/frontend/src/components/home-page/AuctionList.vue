@@ -49,7 +49,7 @@ export default class AuctionList extends Vue {
 .line {
   border: 0.5px solid rgba(0, 0, 0, 0.5);
 }
-.word{
+.word {
   overflow-wrap: break-word;
 }
 </style>

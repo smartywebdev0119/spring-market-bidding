@@ -56,7 +56,6 @@ export default class Login extends Vue {
       // mode: "no-cors",
       body: credentials,
     });
-    console.log(response);
     if (response.url.includes("error")) {
       console.log("ERROR: Login failed.");
     } else {

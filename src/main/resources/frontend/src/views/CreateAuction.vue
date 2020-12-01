@@ -80,36 +80,34 @@ export default class CreateAuction extends Vue {
     title: null,
   };
 
-  get user(){
-    return this.$store.state.loggedInUser
+  get user() {
+    return this.$store.state.loggedInUser;
   }
-  
+
   created() {
-    if(!this.$store.state.loggedInUser){
+    if (!this.$store.state.loggedInUser) {
       this.$router.push({ path: "/login" });
     }
   }
 
   async createAuction() {
+    let auctionToBeSaved = {
+      end_date: this.auction.end_date.getTime(),
+      start_price: Number.parseFloat(this.auction.start_price),
+      title: this.auction.title,
+      description: this.auction.description,
+      image_URL: this.auction.image_URL,
+      user: this.user.user_id,
+    };
 
-      let auctionToBeSaved = {
-        end_date: this.auction.end_date.getTime(),
-        start_price: Number.parseFloat(this.auction.start_price),
-        title: this.auction.title,
-        description: this.auction.description,
-        image_URL: this.auction.image_URL,
-        user: this.user.user_id,
-      };
-
-      let newAuction = await fetch("/api/v1/auctions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(auctionToBeSaved),
-      });
-      newAuction = await newAuction.json();
-      this.$router.push({ path: `auction/${newAuction.auction_id}` });
-    }
-  
+    let newAuction = await fetch("/api/v1/auctions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(auctionToBeSaved),
+    });
+    newAuction = await newAuction.json();
+    this.$router.push({ path: `auction/${newAuction.auction_id}` });
+  }
 }
 </script>
 

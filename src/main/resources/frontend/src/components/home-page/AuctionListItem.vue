@@ -75,9 +75,8 @@ export default class AuctionListItem extends Vue {
   .card-body {
     padding: 10px;
   }
-  .card-img-top{
+  .card-img-top {
     padding: 5%;
-  
   }
 }
 .card-title {

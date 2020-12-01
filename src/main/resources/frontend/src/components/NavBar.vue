@@ -21,7 +21,7 @@ export default class NavBar extends Vue {
   align-items: center;
   grid-template-columns: 1fr 3fr 1fr;
   column-gap: 5px;
-  background:white;
+  background: white;
   height: 4em;
 
   .title {

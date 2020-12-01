@@ -60,7 +60,6 @@ export default class SliderMenu extends Vue {
     this.toggleMenu();
     if (this.$route.path == menuItem.route) return;
     if (menuItem.route === "/logout") {
-      console.log("DO I EXIST?");
       return this.logoutUser();
     }
     this.$router.push(menuItem.route);
@@ -72,7 +71,7 @@ export default class SliderMenu extends Vue {
     })
       .then((response) => {
         if (response.ok) {
-          this.$store.commit("setloggedInUser", null)
+          this.$store.commit("setloggedInUser", null);
           //return user to home
           if (this.$route.path === "/") return;
           this.$router.push("/");

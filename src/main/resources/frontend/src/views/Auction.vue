@@ -40,11 +40,15 @@
         </div>
       </div>
       <div class="bid row">
-      <button type="button" class="btn btn-primary bid-btn col-4 offset-4"  @click="toggleModal">
-  Place bid
-</button>
-</div>
-
+        <button
+          type="button"
+          class="btn btn-primary bid-btn col-4 offset-4"
+          v-if="loggedInUser.user_id != auction.auctionOwner.user_id"
+          @click="toggleModal"
+        >
+          Place bid
+        </button>
+      </div>
 
       <div class="row auction-description">
         <h4 class="title col-12">Description</h4>
@@ -63,7 +67,12 @@
         </div>
       </div>
     </div>
-    <PlaceBidModal @closeModal="toggleModal" v-if="showModal" :bids="bids" :auction="auction" />
+    <PlaceBidModal
+      @closeModal="toggleModal"
+      v-if="showModal"
+      :bids="bids"
+      :auction="auction"
+    />
   </div>
 </template>
 
@@ -72,13 +81,13 @@ import { Vue, Component } from "vue-property-decorator";
 import CurrentBid from "../components/CurrentBid.vue";
 import AuctionTimer from "../components/AuctionTimer.vue";
 import { fetchBidsByAuctionId } from "../core/utilities";
-import PlaceBidModal from '../components/PlaceBidModal'
+import PlaceBidModal from "../components/PlaceBidModal";
 
 @Component({
   components: {
     CurrentBid,
     AuctionTimer,
-    PlaceBidModal
+    PlaceBidModal,
   },
 })
 export default class Auction extends Vue {
@@ -98,8 +107,8 @@ export default class Auction extends Vue {
     this.$router.go(-1);
   }
 
-  get loggedInUser(){
-    return this.$store.state.loggedInUser
+  get loggedInUser() {
+    return this.$store.state.loggedInUser;
   }
 
   async created() {
@@ -111,14 +120,12 @@ export default class Auction extends Vue {
     this.processing = false;
   }
 
-  toggleModal(){
-    if(!this.loggedInUser){
-      this.$router.push("/login")
+  toggleModal() {
+    if (!this.loggedInUser) {
+      this.$router.push("/login");
     }
-    this.showModal = !this.showModal
+    this.showModal = !this.showModal;
   }
-
-
 }
 </script>
 
@@ -184,7 +191,7 @@ export default class Auction extends Vue {
   }
 }
 
-.bid-btn{
- border-radius: 12px;
+.bid-btn {
+  border-radius: 12px;
 }
 </style>

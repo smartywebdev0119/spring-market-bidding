@@ -45,7 +45,6 @@ export default class Search extends Vue {
 @media (min-width: 768px) {
   .search-wrapper {
     .form-group {
-
       #search-field,
       #search {
         width: 60%;
