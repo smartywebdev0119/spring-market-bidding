@@ -49,11 +49,11 @@
         <h4 class="title col-12">Contact information</h4>
         <div class="divider" />
         <div class="description col-12">
-          <p>{{ auction.auctionOwner.username }}</p>
           <p>
             <i class="material-icons align-middle" aria-hidden="true">mail</i>
             {{ auction.auctionOwner.email }}
           </p>
+          <p>{{ auction.auctionOwner.username }}</p>
         </div>
       </div>
     </div>
