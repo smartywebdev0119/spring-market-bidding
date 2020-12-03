@@ -37,7 +37,6 @@ public class SocketService {
 
 
   // De två metoderna "sendToOne" och "sendToAll" nedan äger själva logiken som skickar ut meddelanden/laster till klienterna.
-
   public void sendToOne(WebSocketSession webSocketSession, String message) throws IOException {
     webSocketSession.sendMessage(new TextMessage(message));
   }

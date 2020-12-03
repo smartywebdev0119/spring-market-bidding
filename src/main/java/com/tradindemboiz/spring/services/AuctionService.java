@@ -1,6 +1,7 @@
 package com.tradindemboiz.spring.services;
 
 import com.tradindemboiz.spring.dto.AuctionCreateDto;
+import com.tradindemboiz.spring.dtos.SocketDto;
 import com.tradindemboiz.spring.entities.Auction;
 import com.tradindemboiz.spring.entities.User;
 import com.tradindemboiz.spring.repositories.AuctionRepo;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +25,9 @@ public class AuctionService {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    SocketService socketService;
 
     public List<Auction> getAllAuctions(String searchString) {
         if (searchString != null && !searchString.isEmpty()) {
@@ -46,7 +51,7 @@ public class AuctionService {
             return results;
         }
 
-        return auctionRepo.findAll();
+        return auctionRepo.findByOrderByTimestampDesc();
     }
 
     public List<Auction> getAllAuctionsByUserId(long userId) {
@@ -67,8 +72,12 @@ public class AuctionService {
         User user = userRepo.findById(auctionToAdd.getUser()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND,"couldn't find user"));
 
-        Auction auction = new Auction( auctionToAdd, user);
-        return auctionRepo.save(auction);
+        Auction auction = new Auction(auctionToAdd, user);
+        Auction newAuction = auctionRepo.save(auction);
+
+        socketService.prepareSendToAll(new SocketDto("newAuction", newAuction));
+
+        return newAuction;
     }
 
     public void updateAuction(Auction auction, long id) {

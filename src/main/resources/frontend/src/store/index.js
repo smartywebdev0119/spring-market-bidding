@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { messageHandler } from "../core/WebsocketHandler";
 
 Vue.use(Vuex);
 
@@ -35,6 +36,10 @@ export default new Vuex.Store({
       state.auction?.auction_id === data.bidAuction.auction_id &&
         state.auction.bids.unshift(data);
     },
+    setNewAuction(state, data) {
+      
+      state.auctions?.unshift(data);
+    }
   },
   actions: {
     async fetchAuction({ commit }, id) {
@@ -89,16 +94,8 @@ export default new Vuex.Store({
       };
 
       store.state.websocket.onmessage = (e) => {
-        let data = JSON.parse(e.data);
-
-        switch (data.action) {
-          case "newBid":
-            store.commit("setAuctionBids", data.payload);
-            break;
-          default:
-            break;
-        }
-      };
+        messageHandler(store, e);
+      }
     },
   },
   modules: {},

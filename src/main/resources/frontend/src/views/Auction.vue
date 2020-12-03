@@ -80,7 +80,6 @@
 import { Vue, Component } from "vue-property-decorator";
 import CurrentBid from "../components/CurrentBid.vue";
 import AuctionTimer from "../components/AuctionTimer.vue";
-// import { fetchBidsByAuctionId } from "../core/utilities";
 import PlaceBidModal from "../components/PlaceBidModal";
 
 @Component({
