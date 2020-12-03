@@ -10,6 +10,7 @@ export default new Vuex.Store({
     websocket: null,
     auction: null,
     auctions: null,
+    searchResults: null,
     searchWord: "",
   },
   mutations: {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     setAuctions(state, data) {
       state.auctions = data;
+    },
+    setSearchResults(state, data) {
+      state.searchResults = data;
     },
     setSearchWord(state, data) {
       state.searchWord = data;
@@ -37,16 +41,15 @@ export default new Vuex.Store({
         state.auction.bids.unshift(data);
     },
     setNewAuction(state, data) {
-      
       state.auctions?.unshift(data);
-    }
+    },
   },
   actions: {
     async fetchAuction({ commit }, id) {
       const raw = await fetch(`/api/v1/auctions/${id}`);
       const auction = await raw.json();
       let bids = await fetch(`/api/v1/bids/auction/${auction.auction_id}`);
-      bids = await bids.json(); 
+      bids = await bids.json();
       auction.bids = bids;
       commit("setAuction", auction);
     },
@@ -63,19 +66,22 @@ export default new Vuex.Store({
         auction.bids = bids;
       }
 
-      console.log(auctionResults);
-      commit("setAuctions", auctionResults);
-      commit("setSearchWord", searchQuery);
+      if (searchQuery) {
+        commit("setSearchWord", searchQuery);
+        commit("setSearchResults", auctionResults);
+      } else {
+        commit("setSearchWord", "");
+        commit("setAuctions", auctionResults);
+      }
     },
 
     async whoami({ commit }) {
       let user = await fetch("/auth/whoami");
       try {
         user = await user.json();
-        console.log(user);
+        // console.log(user);
         commit("setloggedInUser", user);
-      } catch (e) {
-        e.printStackTrace();
+      } catch {
         console.log("Not authenticated");
       }
     },
@@ -95,7 +101,7 @@ export default new Vuex.Store({
 
       store.state.websocket.onmessage = (e) => {
         messageHandler(store, e);
-      }
+      };
     },
   },
   modules: {},

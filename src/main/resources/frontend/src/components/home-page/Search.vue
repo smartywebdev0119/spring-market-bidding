@@ -21,8 +21,12 @@ import { Vue, Component } from "vue-property-decorator";
 @Component
 export default class Search extends Vue {
   searchQuery = "";
+
   executeSearch() {
-    this.$store.dispatch("fetchAllAuctionsWithQuery", this.searchQuery);
+    if (!this.searchQuery) {
+      this.$store.commit("setSearchResults", []);
+    }
+    this.$store.dispatch("fetchAllAuctionsWithQuery", this.searchQuery.trim());
   }
 }
 </script>
