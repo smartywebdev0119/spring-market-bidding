@@ -32,7 +32,7 @@
         <div
           class="col-6 col-sm-5 col-md-4 col-lg-3 offset-sm-1 offset-md-2 offset-lg-3"
         >
-          <CurrentBid :startPrice="auction.start_price" :bids="bids" />
+          <CurrentBid :startPrice="auction.start_price" :bids="auction.bids" />
         </div>
 
         <div class="col-6 col-sm-5 col-md-4 col-lg-3">
@@ -70,7 +70,7 @@
     <PlaceBidModal
       @closeModal="toggleModal"
       v-if="showModal"
-      :bids="bids"
+      :bids="auction.bids"
       :auction="auction"
     />
   </div>
@@ -80,7 +80,7 @@
 import { Vue, Component } from "vue-property-decorator";
 import CurrentBid from "../components/CurrentBid.vue";
 import AuctionTimer from "../components/AuctionTimer.vue";
-import { fetchBidsByAuctionId } from "../core/utilities";
+// import { fetchBidsByAuctionId } from "../core/utilities";
 import PlaceBidModal from "../components/PlaceBidModal";
 
 @Component({
@@ -91,7 +91,6 @@ import PlaceBidModal from "../components/PlaceBidModal";
   },
 })
 export default class Auction extends Vue {
-  bids = [];
   processing = true;
   showModal = false;
 
@@ -101,10 +100,6 @@ export default class Auction extends Vue {
 
   get imageAlt() {
     return `Image of ${this.auction.title}.`;
-  }
-
-  goBack() {
-    this.$router.go(-1);
   }
 
   get loggedInUser() {
@@ -118,13 +113,8 @@ export default class Auction extends Vue {
       : true;
   }
 
-  async created() {
-    const id = this.$route.params.id;
-    if (this.auction?.auction_id != id) {
-      await this.$store.dispatch("fetchAuction", id);
-    }
-    this.bids = await fetchBidsByAuctionId(id);
-    this.processing = false;
+  goBack() {
+    this.$router.go(-1);
   }
 
   toggleModal() {
@@ -132,6 +122,14 @@ export default class Auction extends Vue {
       this.$router.push("/login");
     }
     this.showModal = !this.showModal;
+  }
+
+  async created() {
+    const id = this.$route.params.id;
+    if (this.auction?.auction_id != id) {
+      await this.$store.dispatch("fetchAuction", id);
+    }
+    this.processing = false;
   }
 }
 </script>

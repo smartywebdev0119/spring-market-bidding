@@ -18,8 +18,17 @@ import SliderMenu from "../src/components/SliderMenu";
 export default class App extends Vue {
   showSlider = false;
 
+  get websocket() {
+    return this.$store.state.websocket;
+  }
+
   toggleSlider() {
     this.showSlider = !this.showSlider;
+  }
+
+  created() {
+    // this.$store.dispatch("whoami");
+    this.$store.dispatch("connectToWebsocket");
   }
 }
 </script>

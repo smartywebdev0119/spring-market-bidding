@@ -1,6 +1,7 @@
 package com.tradindemboiz.spring.services;
 
 import com.tradindemboiz.spring.dtos.BidCreateDto;
+import com.tradindemboiz.spring.dtos.SocketDto;
 import com.tradindemboiz.spring.entities.Auction;
 import com.tradindemboiz.spring.entities.Bid;
 import com.tradindemboiz.spring.repositories.AuctionRepo;
@@ -28,6 +29,9 @@ public class BidService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    SocketService socketService;
+
     public List<Bid> getAllBidsByAuctionId(long auctionId) {
         if (auctionRepo.existsById(auctionId)) {
             return bidRepo.findAllByAuctionId(auctionId);
@@ -53,7 +57,11 @@ public class BidService {
         checkBidValidity(auction, newBid);
         newBid.setBidOwner(user);
         newBid.setBidAuction(auction);
-        return bidRepo.save(newBid);
+        var savedBid = bidRepo.save(newBid);
+
+        socketService.prepareSendToAll(new SocketDto("newBid", savedBid));
+
+        return savedBid;
     }
 
     private void checkBidValidity(Auction auction, Bid newBid) {

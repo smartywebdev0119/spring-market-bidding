@@ -21,7 +21,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class CurrentBid extends Vue {
   @Prop({ type: Number, required: true })
   startPrice;
-  @Prop({ type: Array, default: [] })
+  @Prop({ type: Array })
   bids;
   @Prop({ type: Boolean, default: true })
   showTitle;
@@ -29,7 +29,7 @@ export default class CurrentBid extends Vue {
   fontSize;
 
   get hasBids() {
-    return this.bids.length;
+    return this.bids?.length;
   }
 
   get title() {
