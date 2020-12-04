@@ -18,7 +18,8 @@ export default new Vuex.Store({
       state.websocket = data;
     },
     setAuction(state, value) {
-      state.auction = value;
+      const clonedValue = JSON.parse(JSON.stringify(value));
+      state.auction = clonedValue;
     },
     setAuctions(state, data) {
       state.auctions = data;
