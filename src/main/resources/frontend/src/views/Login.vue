@@ -19,7 +19,9 @@
       <button class="btn btn-primary" type="submit" value="submit">
         Log in
       </button>
-      <button class="btn btn-primary">Register</button>
+      <router-link to="/register" tag="button" class="btn btn-primary"
+        >Not a member?</router-link
+      >
     </form>
   </div>
 </template>
@@ -54,13 +56,12 @@ export default class Login extends Vue {
       // mode: "no-cors",
       body: credentials,
     });
-    console.log(response);
     if (response.url.includes("error")) {
       console.log("ERROR: Login failed.");
     } else {
       console.log("SUCCESS: Login succeeded");
       await this.$store.dispatch("whoami");
-      this.$router.push("/");
+      this.$router.go(-1);
     }
   }
 }
@@ -85,6 +86,42 @@ export default class Login extends Vue {
     .btn {
       width: 55%;
       justify-self: center;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .login-wrapper {
+    form {
+      input {
+        width: 40%;
+      }
+
+      small {
+        width: 40%;
+      }
+
+      .btn {
+        width: 25%;
+      }
+    }
+  }
+}
+
+@media (min-width: 1600px) {
+  .login-wrapper {
+    form {
+      input {
+        width: 30%;
+      }
+
+      small {
+        width: 30%;
+      }
+
+      .btn {
+        width: 15%;
+      }
     }
   }
 }

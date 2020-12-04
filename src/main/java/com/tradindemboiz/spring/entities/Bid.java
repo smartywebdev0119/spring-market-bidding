@@ -1,11 +1,13 @@
 package com.tradindemboiz.spring.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.tradindemboiz.spring.dtos.BidCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "bids")
@@ -22,12 +24,16 @@ public class Bid {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonManagedReference
+  @JsonManagedReference(value = "bidOwner")
   private User bidOwner;
 
   @ManyToOne
   @JoinColumn(name = "auction_id")
-  @JsonManagedReference
+  @JsonManagedReference(value = "bidAuction")
   private Auction bidAuction;
 
+  public Bid(BidCreateDto bidCreateDto) {
+    this.bid_price = bidCreateDto.getBidPrice();
+    this.timestamp = new Date().getTime();
+  }
 }

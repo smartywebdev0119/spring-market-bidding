@@ -1,9 +1,13 @@
 package com.tradindemboiz.spring.controllers;
 
+import com.tradindemboiz.spring.dto.AuctionCreateDto;
 import com.tradindemboiz.spring.entities.Auction;
+import com.tradindemboiz.spring.entities.Bid;
+import com.tradindemboiz.spring.entities.User;
 import com.tradindemboiz.spring.services.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +40,10 @@ public class AuctionController {
     return ResponseEntity.ok(auctions);
   }
 
-  @PostMapping
-  public ResponseEntity<Auction> addAuction(@Validated @RequestBody Auction auction) {
-    var newAuction = auctionService.addAuction(auction);
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Auction> addAuction(@RequestBody AuctionCreateDto auctionToAdd) {
+
+    var newAuction = auctionService.addAuction(auctionToAdd);
     var uri = URI.create("/api/v1/auctions/" + newAuction.getAuction_id());
     return ResponseEntity.created(uri).body(newAuction);
   }

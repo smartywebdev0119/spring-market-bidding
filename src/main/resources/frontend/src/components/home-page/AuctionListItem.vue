@@ -16,7 +16,7 @@
               :fontSize="12"
               :showTitle="false"
               :startPrice="auction.start_price"
-              :bids="bids"
+              :bids="auction.bids"
             />
           </div>
           <div class="col-12">
@@ -36,7 +36,6 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import AuctionTimer from "../AuctionTimer";
 import CurrentBid from "../CurrentBid";
-import { fetchBidsByAuctionId } from "../../core/utilities";
 
 @Component({
   components: {
@@ -49,12 +48,6 @@ export default class AuctionListItem extends Vue {
     required: true,
   })
   auction;
-
-  bids = [];
-
-  async created() {
-    this.bids = await fetchBidsByAuctionId(this.auction.auction_id);
-  }
 
   navigate() {
     this.$store.commit("setAuction", this.auction);
@@ -74,6 +67,9 @@ export default class AuctionListItem extends Vue {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   .card-body {
     padding: 10px;
+  }
+  .card-img-top {
+    padding: 5%;
   }
 }
 .card-title {

@@ -7,6 +7,7 @@ import "./assets/_custom.scss"
 
 Vue.config.productionTip = false;
 
+
 new Vue({
   router,
   store,

@@ -31,17 +31,14 @@ import AuctionListItem from "../home-page/AuctionListItem";
   },
 })
 export default class AuctionList extends Vue {
-  auctioner = [];
 
   get searchWord() {
     return this.$store.state.searchWord;
   }
 
   get auctions() {
-    return this.$store.state.auctions;
+    return this.searchWord ? this.$store.state.searchResults : this.$store.state.auctions;
   }
-
-  created() {}
 }
 </script>
 
@@ -49,7 +46,7 @@ export default class AuctionList extends Vue {
 .line {
   border: 0.5px solid rgba(0, 0, 0, 0.5);
 }
-.word{
+.word {
   overflow-wrap: break-word;
 }
 </style>

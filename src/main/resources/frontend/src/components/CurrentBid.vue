@@ -1,8 +1,12 @@
 <template>
   <div class="auction-details">
-    <h3 v-if="showTitle" class="title" :style="standardFontSize">{{ title }}</h3>
+    <h3 v-if="showTitle" class="title" :style="standardFontSize">
+      {{ title }}
+    </h3>
     <div class="bid-info">
-      <span class="current-bid" :style="standardFontSize">{{ currentPrice }}</span>
+      <span class="current-bid" :style="standardFontSize">{{
+        currentPrice
+      }}</span>
       <span v-if="hasBids" class="bids-counter" :style="bidCounterFontSize">
         {{ numberOfBids }}
       </span>
@@ -17,7 +21,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 export default class CurrentBid extends Vue {
   @Prop({ type: Number, required: true })
   startPrice;
-  @Prop({ type: Array, default: [] })
+  @Prop({ type: Array })
   bids;
   @Prop({ type: Boolean, default: true })
   showTitle;
@@ -25,7 +29,7 @@ export default class CurrentBid extends Vue {
   fontSize;
 
   get hasBids() {
-    return this.bids.length;
+    return this.bids?.length;
   }
 
   get title() {

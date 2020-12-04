@@ -16,33 +16,54 @@
 </template>
 
 <script>
-import { Vue, Component, } from "vue-property-decorator";
+import { Vue, Component } from "vue-property-decorator";
 
 @Component
 export default class Search extends Vue {
   searchQuery = "";
-  executeSearch() {
-    this.$store.dispatch("fetchAllAuctionsWithQuery", this.searchQuery);
-  }
 
-  //TODO Remove this watch later on.
-  // @Watch("$store.state.auctions")
-  // onAuctionsChange(newVal) {
-  //   console.log(newVal);
-  // }
+  executeSearch() {
+    if (!this.searchQuery) {
+      this.$store.commit("setSearchResults", []);
+    }
+    this.$store.dispatch("fetchAllAuctionsWithQuery", this.searchQuery.trim());
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .search-wrapper {
+  margin-top: 5vh;
   .form-group {
     display: grid;
-    row-gap: 5px;
+    row-gap: 15px;
 
     #search-field,
     #search {
       justify-self: center;
-      width: 80%;
+      width: 75%;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .search-wrapper {
+    .form-group {
+      #search-field,
+      #search {
+        width: 60%;
+      }
+    }
+  }
+}
+
+@media (min-width: 1100px) {
+  .search-wrapper {
+    .form-group {
+      #search-field,
+      #search {
+        width: 50%;
+      }
     }
   }
 }

@@ -1,12 +1,8 @@
 <template>
   <div class="home-page bg-pic">
-    <div class="bg-grey">HEADER D3mTr@din'Bo!z</div>
-    <div class="background">
-      <img src="../assets/img/auction1.jpg" alt="" />
-      
-    </div>
-      <Search />
-      <AuctionList />
+    <div class="background"></div>
+    <Search />
+    <AuctionList />
   </div>
 </template>
 
@@ -22,8 +18,7 @@ import AuctionList from "../components/home-page/AuctionList";
   },
 })
 export default class Home extends Vue {
-
-  created(){
+  created() {
     this.$store.dispatch("fetchAllAuctionsWithQuery", "");
   }
 }
@@ -32,11 +27,10 @@ export default class Home extends Vue {
 <style lang="scss" scoped>
 .background {
   max-width: 100vw;
+  height: 15vh;
   overflow: hidden;
-  max-height: 30vh;
-}
-img {
-  width: 100%;
-  object-fit: cover;
+  background-image: url("../assets/img/auction1.jpg");
+  background-position: center;
+  background-size: cover;
 }
 </style>

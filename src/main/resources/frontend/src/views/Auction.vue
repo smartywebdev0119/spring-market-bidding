@@ -32,12 +32,22 @@
         <div
           class="col-6 col-sm-5 col-md-4 col-lg-3 offset-sm-1 offset-md-2 offset-lg-3"
         >
-          <CurrentBid :startPrice="auction.start_price" :bids="bids" />
+          <CurrentBid :startPrice="auction.start_price" :bids="auction.bids" />
         </div>
 
         <div class="col-6 col-sm-5 col-md-4 col-lg-3">
           <AuctionTimer :endDate="auction.end_date" />
         </div>
+      </div>
+      <div class="bid row">
+        <button
+          type="button"
+          class="btn btn-primary bid-btn col-4 offset-4"
+          v-if="isOwner"
+          @click="toggleModal"
+        >
+          Place bid
+        </button>
       </div>
 
       <div class="row auction-description">
@@ -45,7 +55,24 @@
         <div class="divider"></div>
         <p class="description col-12">"{{ auction.description }}"</p>
       </div>
+      <div class="row auction-description">
+        <h4 class="title col-12">Contact information</h4>
+        <div class="divider" />
+        <div class="description col-12">
+          <p>
+            <i class="material-icons align-middle" aria-hidden="true">mail</i>
+            {{ auction.auctionOwner.email }}
+          </p>
+          <p>{{ auction.auctionOwner.username }}</p>
+        </div>
+      </div>
     </div>
+    <PlaceBidModal
+      @closeModal="toggleModal"
+      v-if="showModal"
+      :bids="auction.bids"
+      :auction="auction"
+    />
   </div>
 </template>
 
@@ -53,17 +80,18 @@
 import { Vue, Component } from "vue-property-decorator";
 import CurrentBid from "../components/CurrentBid.vue";
 import AuctionTimer from "../components/AuctionTimer.vue";
-import { fetchBidsByAuctionId } from "../core/utilities";
+import PlaceBidModal from "../components/PlaceBidModal";
 
 @Component({
   components: {
     CurrentBid,
     AuctionTimer,
+    PlaceBidModal,
   },
 })
 export default class Auction extends Vue {
-  bids = [];
   processing = true;
+  showModal = false;
 
   get auction() {
     return this.$store.state.auction;
@@ -72,9 +100,27 @@ export default class Auction extends Vue {
   get imageAlt() {
     return `Image of ${this.auction.title}.`;
   }
-  
+
+  get loggedInUser() {
+    return this.$store.state.loggedInUser;
+  }
+
+  get isOwner() {
+    if (!this.loggedInUser) return true;
+    return this.loggedInUser.user_id === this.auction.auctionOwner.user_id
+      ? false
+      : true;
+  }
+
   goBack() {
     this.$router.go(-1);
+  }
+
+  toggleModal() {
+    if (!this.loggedInUser) {
+      this.$router.push("/login");
+    }
+    this.showModal = !this.showModal;
   }
 
   async created() {
@@ -82,7 +128,6 @@ export default class Auction extends Vue {
     if (this.auction?.auction_id != id) {
       await this.$store.dispatch("fetchAuction", id);
     }
-    this.bids = await fetchBidsByAuctionId(id);
     this.processing = false;
   }
 }
@@ -148,5 +193,9 @@ export default class Auction extends Vue {
       margin: 5px 0;
     }
   }
+}
+
+.bid-btn {
+  border-radius: 12px;
 }
 </style>
