@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SocketDto {
-  private String action;
-  private Object payload;
+  public class SocketDto {
+    private String action;
+    private Object payload;
 }

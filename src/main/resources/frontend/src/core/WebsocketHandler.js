@@ -5,11 +5,13 @@ export const messageHandler = (store, e) => {
     case "newBid":
       store.commit("setAuctionBids", data.payload);
       break;
+
     case "newAuction":
       data.payload.bids = [];
       console.log("New Auction: ", data.payload);
       store.commit("setNewAuction", data.payload);
       break;
+
     default:
       break;
   }
