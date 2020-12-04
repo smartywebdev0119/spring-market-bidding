@@ -42,7 +42,7 @@ public class AuctionController {
 
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Auction> addAuction(@RequestBody AuctionCreateDto auctionToAdd) {
-
+    System.out.println("INNAN SERVICE");
     var newAuction = auctionService.addAuction(auctionToAdd);
     var uri = URI.create("/api/v1/auctions/" + newAuction.getAuction_id());
     return ResponseEntity.created(uri).body(newAuction);

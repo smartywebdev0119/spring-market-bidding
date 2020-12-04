@@ -76,6 +76,8 @@ export default class CreateAuction extends Vue {
     title: null,
   };
 
+  imageFiles = null;
+
   get user() {
     return this.$store.state.loggedInUser;
   }
@@ -87,7 +89,8 @@ export default class CreateAuction extends Vue {
   }
 
   setImages(imgs) {
-    this.auction.images = imgs;
+    this.auction.images = imgs.images;
+    this.imageFiles = imgs.imageFiles;
     console.log('2"Punisher', this.auction.images);
   }
 
@@ -101,6 +104,8 @@ export default class CreateAuction extends Vue {
       user: this.user.user_id,
     };
 
+    console.log("JASONWON ",JSON.stringify(auctionToBeSaved))
+
     let newAuction = await fetch("/api/v1/auctions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -108,7 +113,7 @@ export default class CreateAuction extends Vue {
     });
     newAuction = await newAuction.json();
 
-    await fetch("/api/v1/upload-files", {
+    await fetch("/api/v1/upload-images", {
       method: "POST",
       body: this.imageFiles,
     });

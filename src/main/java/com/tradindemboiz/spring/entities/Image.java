@@ -16,14 +16,12 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private long id;
     private String image_URL;
     @ManyToOne
     @JoinColumn(name = "auction_id")
     @JsonManagedReference
     private Auction auction;
-
-
 
     public Image(String imagePath, Auction auction) {
         this.image_URL = imagePath;
