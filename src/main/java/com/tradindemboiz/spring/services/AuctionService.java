@@ -29,6 +29,9 @@ public class AuctionService {
     @Autowired
     SocketService socketService;
 
+    @Autowired
+    ImageService imageService;
+
     public List<Auction> getAllAuctions(String searchString) {
         if (searchString != null && !searchString.isEmpty()) {
 
@@ -46,8 +49,8 @@ public class AuctionService {
             }
             // this if made bugs in frontend rendering
             //if (results.isEmpty()) {
-             //   throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Found no results on query: " + searchString);
-           // }
+            //   throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Found no results on query: " + searchString);
+            // }
             return results;
         }
 
@@ -70,10 +73,14 @@ public class AuctionService {
     public Auction addAuction(AuctionCreateDto auctionToAdd) {
 
         User user = userRepo.findById(auctionToAdd.getUser()).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND,"couldn't find user"));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "couldn't find user"));
 
         Auction auction = new Auction(auctionToAdd, user);
         Auction newAuction = auctionRepo.save(auction);
+
+        for (var imagePath : auctionToAdd.getImages()) {
+            imageService.addImage(imagePath, newAuction);
+        }
 
         socketService.prepareSendToAll(new SocketDto("newAuction", newAuction));
 

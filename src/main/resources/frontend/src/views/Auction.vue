@@ -25,7 +25,7 @@
 
     <div class="content">
       <div class="row image">
-        <img :src="auction.image_URL" :alt="imageAlt" />
+        <img :src="auction.images" :alt="imageAlt" />
       </div>
 
       <div class="row">

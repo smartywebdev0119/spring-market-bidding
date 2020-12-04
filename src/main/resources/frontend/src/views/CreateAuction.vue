@@ -38,13 +38,7 @@
         required
       />
 
-      <label class="text-primary font-italic">Image Url</label>
-      <input
-        class="form-control mb-4"
-        v-model="auction.image_URL"
-        type="text"
-        required
-      />
+      <ImageUploader @chosen-img="setImages" />
       <div class="center-button">
         <button type="submit" class="btn btn-primary w-75 ">
           Create auction
@@ -57,10 +51,12 @@
 <script>
 import { Component, Vue } from "vue-property-decorator";
 import Datepicker from "vuejs-datepicker";
+import ImageUploader from "../components/ImageUploader";
 
 @Component({
   components: {
     Datepicker,
+    ImageUploader,
   },
 })
 export default class CreateAuction extends Vue {
@@ -75,7 +71,7 @@ export default class CreateAuction extends Vue {
   auction = {
     description: null,
     end_date: this.minDate,
-    image_URL: null,
+    images: [],
     start_price: null,
     title: null,
   };
@@ -90,13 +86,18 @@ export default class CreateAuction extends Vue {
     }
   }
 
+  setImages(imgs) {
+    this.auction.images = imgs;
+    console.log('2"Punisher', this.auction.images);
+  }
+
   async createAuction() {
     let auctionToBeSaved = {
       end_date: this.auction.end_date.getTime(),
       start_price: Number.parseFloat(this.auction.start_price),
       title: this.auction.title,
       description: this.auction.description,
-      image_URL: this.auction.image_URL,
+      images: this.auction.images,
       user: this.user.user_id,
     };
 
@@ -106,7 +107,17 @@ export default class CreateAuction extends Vue {
       body: JSON.stringify(auctionToBeSaved),
     });
     newAuction = await newAuction.json();
-    this.$router.push({ path: `auction/${newAuction.auction_id}` });
+
+    await fetch("/api/v1/upload-files", {
+      method: "POST",
+      body: this.imageFiles,
+    });
+
+    this.imageFiles = null;
+    this.images = [];
+
+  console.log("kiss! ", newAuction)
+   // this.$router.push({ path: `auction/${newAuction.auction_id}` });
   }
 }
 </script>
