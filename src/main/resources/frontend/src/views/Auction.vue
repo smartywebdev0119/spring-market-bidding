@@ -25,7 +25,8 @@
 
     <div class="content">
       <div class="row image">
-        <img :src="auction.image_URL" :alt="imageAlt" />
+        <ImageCarousel />
+        <!-- <img :src="auction.image_URL" :alt="imageAlt" /> -->
       </div>
 
       <div class="row">
@@ -78,15 +79,17 @@
 
 <script>
 import { Vue, Component } from "vue-property-decorator";
-import CurrentBid from "../components/CurrentBid.vue";
-import AuctionTimer from "../components/AuctionTimer.vue";
+import CurrentBid from "../components/CurrentBid";
+import AuctionTimer from "../components/AuctionTimer";
 import PlaceBidModal from "../components/PlaceBidModal";
+import ImageCarousel from "../components/auction-page/ImageCarousel";
 
 @Component({
   components: {
     CurrentBid,
     AuctionTimer,
     PlaceBidModal,
+    ImageCarousel,
   },
 })
 export default class Auction extends Vue {
