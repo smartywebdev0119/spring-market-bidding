@@ -35,10 +35,10 @@ export default new Vuex.Store({
     },
     setAuctionBids(state, data) {
       state.auctions
-        ?.find((auction) => auction.auction_id === data.bidAuction.auction_id)
+        ?.find((auction) => auction.auction_id === data.auction_id)
         .bids.unshift(data);
 
-      state.auction?.auction_id === data.bidAuction.auction_id &&
+      state.auction?.auction_id === data.auction_id &&
         state.auction.bids.unshift(data);
     },
     setNewAuction(state, data) {
@@ -49,9 +49,6 @@ export default new Vuex.Store({
     async fetchAuction({ commit }, id) {
       const raw = await fetch(`/api/v1/auctions/${id}`);
       const auction = await raw.json();
-      let bids = await fetch(`/api/v1/bids/auction/${auction.auction_id}`);
-      bids = await bids.json();
-      auction.bids = bids;
       commit("setAuction", auction);
     },
 
@@ -60,12 +57,6 @@ export default new Vuex.Store({
         `/api/v1/auctions?search=${searchQuery}`
       );
       auctionResults = await auctionResults.json();
-
-      for (let auction of auctionResults) {
-        let bids = await fetch(`/api/v1/bids/auction/${auction.auction_id}`);
-        bids = await bids.json();
-        auction.bids = bids;
-      }
 
       if (searchQuery) {
         commit("setSearchWord", searchQuery);
