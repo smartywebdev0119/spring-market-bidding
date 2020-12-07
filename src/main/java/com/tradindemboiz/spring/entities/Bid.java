@@ -1,6 +1,5 @@
 package com.tradindemboiz.spring.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tradindemboiz.spring.dtos.BidCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,24 +15,23 @@ import java.util.Date;
 @NoArgsConstructor
 public class Bid {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long bid_id;
-  private long timestamp;
-  private int bid_price;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long bid_id;
+    private long timestamp;
+    private int bid_price;
+    private long auction_id;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  @JsonManagedReference(value = "bidOwner")
-  private User bidOwner;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User bidOwner;
 
-  @ManyToOne
-  @JoinColumn(name = "auction_id")
-  @JsonManagedReference(value = "bidAuction")
-  private Auction bidAuction;
+    public Bid(BidCreateDto bidCreateDto) {
+        this.bid_price = bidCreateDto.getBidPrice();
+        this.timestamp = new Date().getTime();
+    }
 
-  public Bid(BidCreateDto bidCreateDto) {
-    this.bid_price = bidCreateDto.getBidPrice();
-    this.timestamp = new Date().getTime();
-  }
+    public long getBidOwner() {
+        return bidOwner.getUser_id();
+    }
 }

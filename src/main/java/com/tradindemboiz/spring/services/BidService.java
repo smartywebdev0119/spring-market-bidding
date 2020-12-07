@@ -56,7 +56,7 @@ public class BidService {
         var newBid = new Bid(bidCreateDto);
         checkBidValidity(auction, newBid);
         newBid.setBidOwner(user);
-        newBid.setBidAuction(auction);
+        newBid.setAuction_id(auction.getAuction_id());
         var savedBid = bidRepo.save(newBid);
 
         socketService.prepareSendToAll(new SocketDto("newBid", savedBid));

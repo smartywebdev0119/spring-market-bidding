@@ -15,7 +15,7 @@ public class BidReadDto {
         bidId = bid.getBid_id();
         timestamp = bid.getTimestamp();
         bidPrice = bid.getBid_price();
-        bidOwnerId = bid.getBidOwner().getUser_id();
-        bidAuctionId = bid.getBidAuction().getAuction_id();
+        bidOwnerId = bid.getBidOwner();
+        bidAuctionId = bid.getAuction_id();
     }
 }
