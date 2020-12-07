@@ -27,6 +27,16 @@ export default class ImageUploader extends Vue {
   filesChange(fileList) {
     if (!fileList.length) return;
 
+    // let uuids = [
+    //   {name: ""},
+    //   {name: ""},
+    //   {name: ""},
+    // ];
+    // for(let uuid of uuids ){
+    //   uuid.name = create_UUID()
+    // }
+    // console.log(uuids)
+
     const formData = new FormData();
     this.imgObj.images = [];
 

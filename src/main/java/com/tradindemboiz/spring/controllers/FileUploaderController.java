@@ -26,6 +26,7 @@ public class FileUploaderController {
 
     @PostMapping("/api/v1/upload-images")
     public List<String> handleFileUpload(@RequestParam List<MultipartFile> files) {
+        System.out.println("INNE MULTIPART");
         final List<String> supportedFileExtensions = List.of(".png,.jpg,.jpeg,.gif,.bmp,.jfif".split(","));
         List<String> resultingFilepaths = new ArrayList<>();
 

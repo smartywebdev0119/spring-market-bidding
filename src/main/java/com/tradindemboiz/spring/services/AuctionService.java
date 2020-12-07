@@ -3,6 +3,7 @@ package com.tradindemboiz.spring.services;
 import com.tradindemboiz.spring.dto.AuctionCreateDto;
 import com.tradindemboiz.spring.dtos.SocketDto;
 import com.tradindemboiz.spring.entities.Auction;
+import com.tradindemboiz.spring.entities.Image;
 import com.tradindemboiz.spring.entities.User;
 import com.tradindemboiz.spring.repositories.AuctionRepo;
 import com.tradindemboiz.spring.repositories.UserRepo;
@@ -12,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,9 +77,14 @@ public class AuctionService {
         Auction auction = new Auction(auctionToAdd, user);
         Auction newAuction = auctionRepo.save(auction);
 
+        HashSet<Image> images = new HashSet<>();
+
         for (var imagePath : auctionToAdd.getImages()) {
-            imageService.addImage(imagePath, newAuction);
+            images.add(imageService.addImage(imagePath, newAuction));
         }
+
+        newAuction.setAuctionImages(images);
+        newAuction = auctionRepo.save(newAuction);
 
         socketService.prepareSendToAll(new SocketDto("newAuction", newAuction));
 

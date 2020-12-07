@@ -50,6 +50,7 @@ export default class AuctionListItem extends Vue {
   auction;
 
   navigate() {
+    console.log("AUCTION ITEM", this.auction)
     this.$store.commit("setAuction", this.auction);
     this.$router.push({ path: `auction/${this.auction.auction_id}` });
   }
