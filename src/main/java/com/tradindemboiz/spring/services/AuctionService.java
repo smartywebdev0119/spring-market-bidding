@@ -80,10 +80,10 @@ public class AuctionService {
         HashSet<Image> images = new HashSet<>();
 
         for (var imagePath : auctionToAdd.getImages()) {
-            images.add(imageService.addImage(imagePath, newAuction));
+            images.add(imageService.addImage(imagePath, newAuction.getAuction_id()));
         }
 
-        newAuction.setAuctionImages(images);
+        newAuction.setImages(images);
         newAuction = auctionRepo.save(newAuction);
 
         socketService.prepareSendToAll(new SocketDto("newAuction", newAuction));

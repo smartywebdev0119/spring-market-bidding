@@ -1,7 +1,7 @@
 <template>
   <form id="create-auction" @submit.prevent="submitForm">
     <div>
-      <label for="files">File to upload:</label>
+      <label for="files" class="text-primary font-italic">Images to upload:</label>
       <input
         type="file"
         name="files"
@@ -11,7 +11,6 @@
         @change="filesChange($event.target.files)"
       />
     </div>
-    <button type="submit">Create Auction</button>
   </form>
 </template>
 

@@ -12,8 +12,8 @@ public class ImageService {
     @Autowired
     ImageRepo imageRepo;
 
-    public Image addImage(String imagePath, Auction auction) {
-        var newImage = new Image(imagePath, auction);
+    public Image addImage(String imagePath, long id ) {
+        var newImage = new Image(imagePath, id);
         return imageRepo.save(newImage);
     }
 }

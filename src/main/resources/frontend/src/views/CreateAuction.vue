@@ -82,7 +82,7 @@ export default class CreateAuction extends Vue {
     return this.$store.state.loggedInUser;
   }
 
-  created() {
+  async created() {
     if (!this.$store.state.loggedInUser) {
       this.$router.push({ path: "/login" });
     }
@@ -103,8 +103,6 @@ export default class CreateAuction extends Vue {
       images: this.auction.images,
       user: this.user.user_id,
     };
-    console.log("IMAGE UUID ", auctionToBeSaved.images)
-    console.log("JASONWON ",JSON.stringify(auctionToBeSaved))
 
     let newAuction = await fetch("/api/v1/auctions", {
       method: "POST",

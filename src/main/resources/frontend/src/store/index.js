@@ -73,6 +73,7 @@ export default new Vuex.Store({
         user = await user.json();
         // console.log(user);
         commit("setloggedInUser", user);
+        console.log(this.state.loggedInUser , " USSSEEEERR")
       } catch {
         console.log("Not authenticated");
       }
