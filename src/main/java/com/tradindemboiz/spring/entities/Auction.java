@@ -1,7 +1,5 @@
 package com.tradindemboiz.spring.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tradindemboiz.spring.dto.AuctionCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,11 +38,10 @@ public class Auction {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  @JsonManagedReference(value = "auctionOwner")
   private User auctionOwner;
 
-  @OneToMany(mappedBy = "bidAuction", cascade = CascadeType.ALL)
-  @JsonBackReference(value = "bidAuctions")
-  private Set<Bid> auctionBids;
-
+  @OneToMany
+  @JoinColumn(name = "auction_id")
+  @OrderBy("bid_price DESC")
+  private Set<Bid> bids;
 }

@@ -1,6 +1,5 @@
 package com.tradindemboiz.spring.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tradindemboiz.spring.dto.UserDto;
@@ -9,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -44,14 +42,6 @@ public class User {
   public User(String username) {
     this.username = username;
   }
-
-  @OneToMany(mappedBy = "bidOwner", cascade = CascadeType.ALL)
-  @JsonBackReference(value = "bidOwner")
-  private Set<Bid> userBids;
-
-  @OneToMany(mappedBy = "auctionOwner", cascade = CascadeType.ALL)
-  @JsonBackReference(value = "auctionOwner")
-  private Set<Auction> userAuctions;
 
   @JsonIgnore
   public String getPassword() {
