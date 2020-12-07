@@ -2,10 +2,10 @@
   <div class="image-carousel">
     <div class="image-wrapper">
       <img :src="imageSelected" />
-      <span class="material-icons arrow left text-primary" @click="swipeLeft"
+      <span v-if="this.images.length > 1" class="material-icons arrow left text-primary" @click="swipeLeft"
         >keyboard_arrow_left</span
       >
-      <span class="material-icons arrow right text-primary" @click="swipeRight"
+      <span v-if="this.images.length > 1" class="material-icons arrow right text-primary" @click="swipeRight"
         >keyboard_arrow_right</span
       >
     </div>
@@ -13,20 +13,24 @@
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class ImageCarousel extends Vue {
+
+  @Prop({
+    required: true,
+  })
+  images
+
   imageIndex = 0;
-  images = [
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.OemSsSn0VuJIXoXzw4j6XgHaKW%26pid%3DApi&f=1",
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.gaychristian101.com%2Fimages%2Fjesusgentle.jpg&f=1&nofb=1",
-    "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.g56qmqkC2VUIC5rP7HgbDAAAAA%26pid%3DApi&f=1",
-    "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcgcatholic.org.au%2Fwp-content%2Fuploads%2F2015%2F09%2Fjesus_painting_by_heinrich_hofmann-212x300.jpg&f=1&nofb=1",
-  ];
 
   get imageSelected() {
-    return this.images[this.imageIndex];
+    return this.images[this.imageIndex].image_URL? "http://Localhost:3000"+this.images[this.imageIndex].image_URL: this.images[this.imageIndex];
+  }
+
+  created(){
+    console.log(this.images, " IMAGES")
   }
 
   swipeRight() {
@@ -54,10 +58,11 @@ export default class ImageCarousel extends Vue {
   .image-wrapper {
     position: relative;
     transition: 1000ms;
-    max-width: 200px;
+    // max-width: 200px;
+    height: 300px;
 
     img {
-      width: 100%;
+      width: auto;
       height: 100%;
     }
 

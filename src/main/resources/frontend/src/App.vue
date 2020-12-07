@@ -27,7 +27,7 @@ export default class App extends Vue {
   }
 
   async created() {
-    await this.$store.dispatch("whoami");
+    this.$store.dispatch("whoami");
     this.$store.dispatch("connectToWebsocket");
   }
 }

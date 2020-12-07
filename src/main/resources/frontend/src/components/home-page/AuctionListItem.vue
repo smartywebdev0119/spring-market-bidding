@@ -48,6 +48,7 @@ export default class AuctionListItem extends Vue {
     required: true,
   })
   auction;
+
   get image() {
     return this.auction.images.length > 0? `http://localhost:3000${this.auction.images[0].image_URL}` : this.auction.image_URL;
   }
@@ -73,6 +74,9 @@ export default class AuctionListItem extends Vue {
   }
   .card-img-top {
     padding: 5%;
+    width: 100%;
+    height: 30vh;
+    object-fit: cover;
   }
 }
 .card-title {
