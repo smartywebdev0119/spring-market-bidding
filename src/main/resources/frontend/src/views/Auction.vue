@@ -96,7 +96,6 @@ export default class Auction extends Vue {
   showModal = false;
 
   get auction() {
-    console.log(this.$store.state.auction, " THIS AUCTION")
     return this.$store.state.auction;
   }
 

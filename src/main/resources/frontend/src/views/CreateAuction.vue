@@ -31,14 +31,29 @@
 
       <label class="text-primary font-italic">Starting price</label>
       <input
-        class="form-control mb-3"
+        class="form-control mb-4"
         v-model="auction.start_price"
         type="number"
         pattern="[0-9]*"
         required
       />
+      <p v-if="fileError" class="text-danger font-weight-bold">
+        {{ fileError }}
+      </p>
 
-      <ImageUploader @chosen-img="setImages" />
+      <ImageUploader @chosen-img="setImages" class="mb-2" />
+
+      <div class=" container row">
+        <SmallImageFiles v-for="(image, i) in this.smallImages" :key="(image,i)" :smallImage="image"  @click="setMarked()"/>
+      </div>
+
+      <!-- <div class="row mb-3">
+        <div  class="mr-1" v-for="(image, i) in this.smallImages" :key="(image,i)" >
+          <img :src="image" alt="" class="small-image" @click="setPreviewImage((i),0)"/>
+        </div>
+      </div> -->
+      <p class="mb-">{{ this.auction.images.length }} files has been choosen</p>
+
       <div class="center-button">
         <button type="submit" class="btn btn-primary w-75 ">
           Create auction
@@ -52,11 +67,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import Datepicker from "vuejs-datepicker";
 import ImageUploader from "../components/ImageUploader";
+import SmallImageFiles from "../components/SmallImageFiles";
 
 @Component({
   components: {
     Datepicker,
     ImageUploader,
+    SmallImageFiles
   },
 })
 export default class CreateAuction extends Vue {
@@ -76,6 +93,9 @@ export default class CreateAuction extends Vue {
     title: null,
   };
 
+  marked = false;
+  smallImages = null;
+  fileError = "";
   imageFiles = null;
 
   get user() {
@@ -83,18 +103,39 @@ export default class CreateAuction extends Vue {
   }
 
   async created() {
-    if (!this.$store.state.loggedInUser) {
-      this.$router.push({ path: "/login" });
-    }
+    // if (!this.$store.state.loggedInUser) {
+    //   this.$router.push({ path: "/login" });
+    // }
   }
 
   setImages(imgs) {
     this.auction.images = imgs.images;
     this.imageFiles = imgs.imageFiles;
-    console.log('2"Punisher', this.auction.images);
+    this.smallImages = imgs.smallImages;
+  }
+
+  setPreviewImage(i){
+    
+    console.log(i, " From Index")
+    let index = i - 1;
+
+    console.log(this.auction.images[index], "INDEX AU")
+
+    let temp = this.auction.images[index]
+    this.auction.images[index] = this.auction.images[0]
+    this.auction.images[0] = temp
+
+    console.log(this.auction.images, "ALL IMAGES")
+    console.log("ALL AUCTIONS: ", this.auction.images)
+    console.log("FIRST AUCTIONS: ", this.auction.images[0])
   }
 
   async createAuction() {
+    if (this.auction.images.length == 0) {
+      this.fileError = "Choose atleast one image";
+      return;
+    }
+
     let auctionToBeSaved = {
       end_date: this.auction.end_date.getTime(),
       start_price: Number.parseFloat(this.auction.start_price),
@@ -103,6 +144,10 @@ export default class CreateAuction extends Vue {
       images: this.auction.images,
       user: this.user.user_id,
     };
+    await fetch("/api/v1/upload-images", {
+      method: "POST",
+      body: this.imageFiles,
+    });
 
     let newAuction = await fetch("/api/v1/auctions", {
       method: "POST",
@@ -111,17 +156,9 @@ export default class CreateAuction extends Vue {
     });
     newAuction = await newAuction.json();
 
-    
-    await fetch("/api/v1/upload-images", {
-      method: "POST",
-      body: this.imageFiles,
-    });
-
     this.imageFiles = null;
     this.images = [];
-
-  console.log("kiss! ", newAuction)
-   this.$router.push({ path: `auction/${newAuction.auction_id}` });
+    this.$router.push({ path: `auction/${newAuction.auction_id}` });
   }
 }
 </script>
@@ -134,5 +171,9 @@ export default class CreateAuction extends Vue {
 .center-button {
   display: flex;
   justify-content: center;
+}
+
+.marked{
+  border: teal 2px solid;
 }
 </style>

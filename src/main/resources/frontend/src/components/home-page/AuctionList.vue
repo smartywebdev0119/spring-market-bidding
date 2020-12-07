@@ -37,7 +37,7 @@ export default class AuctionList extends Vue {
   }
 
   get auctions() {
-    return this.searchWord ? this.$store.state.searchResults : this.$store.state.auctions;
+    return this.$store.state.auctions? this.searchWord ? this.$store.state.searchResults : this.$store.state.auctions : null;
   }
 }
 </script>

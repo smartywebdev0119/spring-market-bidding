@@ -29,10 +29,6 @@ export default class ImageCarousel extends Vue {
     return this.images[this.imageIndex].image_URL? "http://Localhost:3000"+this.images[this.imageIndex].image_URL: this.images[this.imageIndex];
   }
 
-  created(){
-    console.log(this.images, " IMAGES")
-  }
-
   swipeRight() {
     if (this.images.length - 1 === this.imageIndex) {
       this.imageIndex = 0;
@@ -62,8 +58,9 @@ export default class ImageCarousel extends Vue {
     height: 300px;
 
     img {
-      width: auto;
+      max-width: 90vw;
       height: 100%;
+      object-fit: contain;
     }
 
     .arrow {
