@@ -44,18 +44,19 @@
       <ImageUploader @chosen-img="setImages" class="mb-2" />
 
       <div class=" container row">
-        <SmallImageFiles v-for="(image, i) in this.smallImages" :key="(image,i)" :smallImage="image"  @click="setMarked()"/>
+        <SmallImageFiles
+          v-for="(imageObj, i) in smallImages"
+          @newMarkedImage="setPreviewImage"
+          :key="(imageObj.url, i)"
+          :index="i"
+          :smallImageObj="imageObj"
+          @click="setMarked()"
+        />
       </div>
-
-      <!-- <div class="row mb-3">
-        <div  class="mr-1" v-for="(image, i) in this.smallImages" :key="(image,i)" >
-          <img :src="image" alt="" class="small-image" @click="setPreviewImage((i),0)"/>
-        </div>
-      </div> -->
       <p class="mb-">{{ this.auction.images.length }} files has been choosen</p>
 
       <div class="center-button">
-        <button type="submit" class="btn btn-primary w-75 ">
+        <button type="submit" class="btn btn-primary w-75" :disabled="!user">
           Create auction
         </button>
       </div>
@@ -73,7 +74,7 @@ import SmallImageFiles from "../components/SmallImageFiles";
   components: {
     Datepicker,
     ImageUploader,
-    SmallImageFiles
+    SmallImageFiles,
   },
 })
 export default class CreateAuction extends Vue {
@@ -93,13 +94,19 @@ export default class CreateAuction extends Vue {
     title: null,
   };
 
-  marked = false;
-  smallImages = null;
   fileError = "";
   imageFiles = null;
 
   get user() {
     return this.$store.state.loggedInUser;
+  }
+
+  get markedIndex() {
+    return this.$store.state.markedIndex;
+  }
+
+  get smallImages() {
+    return this.auction.images;
   }
 
   async created() {
@@ -111,23 +118,12 @@ export default class CreateAuction extends Vue {
   setImages(imgs) {
     this.auction.images = imgs.images;
     this.imageFiles = imgs.imageFiles;
-    this.smallImages = imgs.smallImages;
   }
 
-  setPreviewImage(i){
+  setPreviewImage(obj) {
     
-    console.log(i, " From Index")
-    let index = i - 1;
-
-    console.log(this.auction.images[index], "INDEX AU")
-
-    let temp = this.auction.images[index]
-    this.auction.images[index] = this.auction.images[0]
-    this.auction.images[0] = temp
-
-    console.log(this.auction.images, "ALL IMAGES")
-    console.log("ALL AUCTIONS: ", this.auction.images)
-    console.log("FIRST AUCTIONS: ", this.auction.images[0])
+    this.auction.images.splice(obj.index, 1);
+    this.auction.images.unshift(obj.imgObj);
   }
 
   async createAuction() {
@@ -141,9 +137,10 @@ export default class CreateAuction extends Vue {
       start_price: Number.parseFloat(this.auction.start_price),
       title: this.auction.title,
       description: this.auction.description,
-      images: this.auction.images,
+      images: this.auction.images.map((x) => x.filename),
       user: this.user.user_id,
     };
+
     await fetch("/api/v1/upload-images", {
       method: "POST",
       body: this.imageFiles,
@@ -173,7 +170,7 @@ export default class CreateAuction extends Vue {
   justify-content: center;
 }
 
-.marked{
+.marked {
   border: teal 2px solid;
 }
 </style>

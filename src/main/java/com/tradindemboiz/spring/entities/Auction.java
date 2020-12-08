@@ -47,6 +47,7 @@ public class Auction {
 
   @OneToMany
   @JoinColumn(name = "auction_id")
+  //@OrderBy("id DESC")
   private Set<Image> images;
 
 

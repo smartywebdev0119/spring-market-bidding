@@ -19,6 +19,7 @@ public class Image {
     private long id;
     private String image_URL;
     private long auction_id;
+    //private boolean is_default;
 
     public Image(String imagePath, long auction_id) {
         this.image_URL = imagePath;

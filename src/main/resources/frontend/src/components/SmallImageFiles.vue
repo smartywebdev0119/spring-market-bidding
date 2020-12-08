@@ -1,35 +1,45 @@
 <template>
-     
-        <div  class=" mr-1 mb-3"  >
-          <img :class="{marked: isMarked}" :src="smallImage" alt="" class="small-image" @click="setMarked"/>
-        </div>
-      
+  <div class=" mr-1 mb-3">
+    <img
+      :class="{ marked: index == 0 }"
+      :src="smallImageObj.url"
+      alt=""
+      class="small-image"
+      @click="setMarked"
+    />
+  </div>
 </template>
 
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
 
-
 @Component({
-  components: {
-    
-  },
+  components: {},
 })
 export default class SmallImageFiles extends Vue {
- @Prop({
+  @Prop({
     required: true,
   })
-  smallImage;
+  smallImageObj;
 
-  isMarked= false;
+  @Prop({
+    required: true,
+  })
+  index;
 
-  setMarked(){
-      console.log(this.isMarked)
-      this.isMarked = !this.isMarked
+  get markedIndex() {
+    console.log(this.$store.state.markedIndex, " MARKED INDEX");
+    return this.$store.state.markedIndex;
+  }
+
+  setMarked() {
+    console.log("small ", this.smallImageObj);
+    this.$emit("newMarkedImage", {
+      imgObj: this.smallImageObj,
+      index: this.index,
+    });
   }
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -37,10 +47,9 @@ export default class SmallImageFiles extends Vue {
   width: 10vw;
   height: 12vh;
   object-fit: cover;
-  
 }
 
-.isMarked{
-    border: teal solid 3px
+.marked {
+  border: teal solid 4px;
 }
 </style>

@@ -12,8 +12,12 @@ export default new Vuex.Store({
     auctions: null,
     searchResults: null,
     searchWord: "",
+    markedIndex: null
   },
   mutations: {
+    setMarkedIndex(state, data){
+      state.markedIndex = data;
+    },
     setWebsocket(state, data) {
       state.websocket = data;
     },
