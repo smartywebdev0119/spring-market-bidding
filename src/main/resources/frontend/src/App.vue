@@ -26,7 +26,7 @@ export default class App extends Vue {
     this.showSlider = !this.showSlider;
   }
 
-  created() {
+  async created() {
     this.$store.dispatch("whoami");
     this.$store.dispatch("connectToWebsocket");
   }

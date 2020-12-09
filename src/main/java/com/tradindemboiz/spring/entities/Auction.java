@@ -32,7 +32,7 @@ public class Auction {
     this.start_price = auctionCreateDto.getStart_price();
     this.title = auctionCreateDto.getTitle();
     this.description = auctionCreateDto.getDescription();
-    this.image_URL = auctionCreateDto.getImage_URL();
+    //this.image_URL = auctionCreateDto.getImage_URL();
     this.auctionOwner = auctionOwner;
   }
 
@@ -44,4 +44,11 @@ public class Auction {
   @JoinColumn(name = "auction_id")
   @OrderBy("bid_price DESC")
   private Set<Bid> bids;
+
+  @OneToMany
+  @JoinColumn(name = "auction_id")
+  //@OrderBy("id DESC")
+  private Set<Image> images;
+
+
 }

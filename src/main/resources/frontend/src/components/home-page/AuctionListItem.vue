@@ -4,7 +4,7 @@
       <div class="">
         <img
           class="card-img-top"
-          :src="auction.image_URL"
+          :src="image"
           alt="Card image cap"
         />
         <div class="card-body row">
@@ -49,10 +49,15 @@ export default class AuctionListItem extends Vue {
   })
   auction;
 
+  get image() {
+    return this.auction.images.length > 0? `http://localhost:3000${this.auction.images[0].image_URL}` : this.auction.image_URL;
+  }
   navigate() {
+    console.log("AUCTION ITEM", this.auction)
     this.$store.commit("setAuction", this.auction);
     this.$router.push({ path: `auction/${this.auction.auction_id}` });
   }
+
 }
 </script>
 
@@ -70,6 +75,9 @@ export default class AuctionListItem extends Vue {
   }
   .card-img-top {
     padding: 5%;
+    width: 100%;
+    height: 30vh;
+    object-fit: cover;
   }
 }
 .card-title {

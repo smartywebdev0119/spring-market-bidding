@@ -12,8 +12,12 @@ export default new Vuex.Store({
     auctions: null,
     searchResults: null,
     searchWord: "",
+    markedIndex: null
   },
   mutations: {
+    setMarkedIndex(state, data){
+      state.markedIndex = data;
+    },
     setWebsocket(state, data) {
       state.websocket = data;
     },
@@ -73,6 +77,7 @@ export default new Vuex.Store({
         user = await user.json();
         // console.log(user);
         commit("setloggedInUser", user);
+        console.log(this.state.loggedInUser , " USSSEEEERR")
       } catch {
         console.log("Not authenticated");
       }

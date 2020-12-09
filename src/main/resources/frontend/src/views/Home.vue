@@ -2,7 +2,7 @@
   <div class="home-page bg-pic">
     <div class="background"></div>
     <Search />
-    <AuctionList />
+    <AuctionList class="mb-5"/>
   </div>
 </template>
 

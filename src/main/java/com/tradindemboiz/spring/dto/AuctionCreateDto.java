@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -16,9 +18,6 @@ public class AuctionCreateDto {
     private double start_price;
     private String title;
     private String description;
-    private String image_URL;
+    private Set<String> images;
     private Long user;
-
-
-
 }
