@@ -8,7 +8,6 @@ export const messageHandler = (store, e) => {
 
     case "newAuction":
       data.payload.bids = [];
-      console.log("New Auction: ", data.payload);
       store.commit("setNewAuction", data.payload);
       break;
 

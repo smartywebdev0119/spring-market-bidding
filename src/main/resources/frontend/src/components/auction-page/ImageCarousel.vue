@@ -54,7 +54,6 @@ export default class ImageCarousel extends Vue {
   .image-wrapper {
     position: relative;
     transition: 1000ms;
-    // max-width: 200px;
     height: 300px;
 
     img {

@@ -59,9 +59,8 @@ export default class Login extends Vue {
     if (response.url.includes("error")) {
       console.log("ERROR: Login failed.");
     } else {
-      console.log("SUCCESS: Login succeeded");
       await this.$store.dispatch("whoami");
-      this.$router.go(-1);
+      this.$router.push("/");
     }
   }
 }

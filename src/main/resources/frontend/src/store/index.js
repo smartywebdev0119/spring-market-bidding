@@ -48,6 +48,10 @@ export default new Vuex.Store({
     setNewAuction(state, data) {
       state.auctions?.unshift(data);
     },
+    removeAuction(state, data) {
+      state.auctions = state.auctions?.filter(auction => auction.auction_id !== data)
+      state.searchResults = state.searchResults?.filter(auction => auction.auction_id !== data)
+    }
   },
   actions: {
     async fetchAuction({ commit }, id) {
@@ -75,9 +79,7 @@ export default new Vuex.Store({
       let user = await fetch("/auth/whoami");
       try {
         user = await user.json();
-        // console.log(user);
         commit("setloggedInUser", user);
-        console.log(this.state.loggedInUser , " USSSEEEERR")
       } catch {
         console.log("Not authenticated");
       }

@@ -109,12 +109,6 @@ export default class CreateAuction extends Vue {
     return this.auction.images;
   }
 
-  async created() {
-    // if (!this.$store.state.loggedInUser) {
-    //   this.$router.push({ path: "/login" });
-    // }
-  }
-
   setImages(imgs) {
     this.auction.images = imgs.images;
     this.imageFiles = imgs.imageFiles;

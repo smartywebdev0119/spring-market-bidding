@@ -28,12 +28,10 @@ export default class SmallImageFiles extends Vue {
   index;
 
   get markedIndex() {
-    console.log(this.$store.state.markedIndex, " MARKED INDEX");
     return this.$store.state.markedIndex;
   }
 
   setMarked() {
-    console.log("small ", this.smallImageObj);
     this.$emit("newMarkedImage", {
       imgObj: this.smallImageObj,
       index: this.index,

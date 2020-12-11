@@ -72,7 +72,6 @@ export default class SliderMenu extends Vue {
       .then((response) => {
         if (response.ok) {
           this.$store.commit("setloggedInUser", null);
-          //return user to home
           if (this.$route.path === "/") return;
           this.$router.push("/");
         }

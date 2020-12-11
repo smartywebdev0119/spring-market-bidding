@@ -24,6 +24,7 @@
               :fontSize="12"
               :showTitle="false"
               :endDate="auction.end_date"
+              @is-expired="isExpired"
             />
           </div>
         </div>
@@ -53,9 +54,12 @@ export default class AuctionListItem extends Vue {
     return this.auction.images.length > 0? `http://localhost:3000${this.auction.images[0].image_URL}` : this.auction.image_URL;
   }
   navigate() {
-    console.log("AUCTION ITEM", this.auction)
     this.$store.commit("setAuction", this.auction);
     this.$router.push({ path: `auction/${this.auction.auction_id}` });
+  }
+
+  isExpired(){
+    this.$store.commit("removeAuction", this.auction.auction_id)
   }
 
 }
