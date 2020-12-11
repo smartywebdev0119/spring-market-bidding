@@ -1,12 +1,12 @@
 module.exports = {
   devServer: {
     proxy: {
-      "^/rest/": {
+      "^/api/": {
         target: "http://localhost:3000",
         ws: true,
         changeOrigin: true,
       },
-      "^/api/": {
+      "^/auth/": {
         target: "http://localhost:3000",
         ws: true,
         changeOrigin: true,

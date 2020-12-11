@@ -1,10 +1,12 @@
 package com.tradindemboiz.spring.entities;
 
+import com.tradindemboiz.spring.dtos.BidCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "bids")
@@ -13,18 +15,23 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Bid {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long bid_id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long bid_id;
+    private long timestamp;
+    private int bid_price;
+    private long auction_id;
 
-  private long timestamp;
-  private int bid_price;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User bidOwner;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+    public Bid(BidCreateDto bidCreateDto) {
+        this.bid_price = bidCreateDto.getBidPrice();
+        this.timestamp = new Date().getTime();
+    }
 
-  @ManyToOne
-  @JoinColumn(name = "auctions_id")
-  private Auction auction;
+    public long getBidOwner() {
+        return bidOwner.getUser_id();
+    }
 }

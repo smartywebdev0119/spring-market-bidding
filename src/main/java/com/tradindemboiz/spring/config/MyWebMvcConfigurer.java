@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.CacheControl;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import javax.sql.DataSource;
@@ -28,7 +30,7 @@ class MyWebMvcConfigurer implements WebMvcConfigurer {
                                          Resource location) throws IOException {
             Resource requestedResource = location.createRelative(resourcePath);
             return requestedResource.exists() && requestedResource.isReadable() ? requestedResource
-                : new ClassPathResource("/static/index.html");
+                : new ClassPathResource("/static/index.html"); //TODO Fråga Johan vad som ska stå här?..
           }
         });
   }
@@ -39,5 +41,15 @@ class MyWebMvcConfigurer implements WebMvcConfigurer {
     dataSourceBuilder.driverClassName("org.sqlite.JDBC");
     dataSourceBuilder.url("jdbc:sqlite:tradinDemBoiz.db");
     return dataSourceBuilder.build();
+  }
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("http://localhost:8080");
+      }
+    };
   }
 }
